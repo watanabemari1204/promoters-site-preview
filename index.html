@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>株式会社Promoters｜不動産は「保有」から「活用」の時代へ — 銀座の不動産開発・再生・管理</title>
+<meta name="description" content="株式会社Promoters（東京・銀座）。綿密なマーケティングに基づく不動産開発・不動産再生・賃貸管理の一気通貫体制で、不動産のポテンシャルを最大化します。収益物件・土地活用・共同開発のご相談は03-3541-7000へ。">
+<meta property="og:title" content="株式会社Promoters｜不動産は「保有」から「活用」の時代へ">
+<meta property="og:description" content="銀座発。開発・再生・管理の一気通貫で不動産の価値を最大化する不動産コンサルティングファーム。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.promoters.co.jp/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&family=Cormorant+Garamond:wght@300;400;500&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "RealEstateAgent",
+  "name": "株式会社Promoters",
+  "url": "https://www.promoters.co.jp/",
+  "telephone": "+81-3-3541-7000",
+  "faxNumber": "+81-3-3541-7005",
+  "foundingDate": "2008-07-01",
+  "address": {
+    "@type": "PostalAddress",
+    "addressCountry": "JP",
+    "addressRegion": "東京都",
+    "addressLocality": "中央区",
+    "streetAddress": "銀座2-9-13 GINZAⅡビル 7F"
+  },
+  "areaServed": "東京都",
+  "description": "不動産開発・不動産再生・賃貸管理を一気通貫で行う銀座の不動産コンサルティングファーム。"
+}
+</script>
+<style>
+:root{
+  --ink:#0e1116;
+  --ink-2:#141922;
+  --ink-3:#1b2230;
+  --gold:#c8a45d;
+  --gold-bright:#e6cd8f;
+  --gold-dim:rgba(200,164,93,.28);
+  --paper:#f2eee5;
+  --muted:#98a0ad;
+  --serif:"Shippori Mincho","Hiragino Mincho ProN",serif;
+  --sans:"Zen Kaku Gothic New","Hiragino Kaku Gothic ProN",sans-serif;
+  --en:"Cormorant Garamond","Shippori Mincho",serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  background:var(--ink);
+  color:var(--paper);
+  font-family:var(--sans);
+  font-weight:300;
+  line-height:1.9;
+  letter-spacing:.04em;
+  overflow-x:hidden;
+}
+::selection{background:var(--gold);color:var(--ink)}
+img{max-width:100%}
+a{color:inherit;text-decoration:none}
+
+/* ---------- loader ---------- */
+#loader{
+  position:fixed;inset:0;z-index:100;background:var(--ink);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;
+  transition:opacity .8s ease,visibility .8s;
+}
+#loader.done{opacity:0;visibility:hidden}
+#loader .mark{
+  font-family:var(--en);font-size:15px;letter-spacing:.55em;text-indent:.55em;
+  color:var(--gold);text-transform:uppercase;
+}
+#loader .bar{width:120px;height:1px;background:rgba(255,255,255,.12);overflow:hidden}
+#loader .bar i{display:block;height:100%;width:40%;background:var(--gold);animation:load 1.1s ease-in-out infinite}
+@keyframes load{0%{transform:translateX(-120%)}100%{transform:translateX(320%)}}
+
+/* ---------- header ---------- */
+header{
+  position:fixed;top:0;left:0;right:0;z-index:50;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:22px clamp(20px,4vw,56px);
+  transition:background .4s,padding .4s,border-color .4s;
+  border-bottom:1px solid transparent;
+}
+header.scrolled{
+  background:rgba(14,17,22,.88);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  padding:14px clamp(20px,4vw,56px);
+  border-bottom-color:rgba(200,164,93,.15);
+}
+.logo{display:flex;flex-direction:column;line-height:1.3}
+.logo .en{font-family:var(--en);font-size:20px;letter-spacing:.42em;color:var(--paper)}
+.logo .en b{color:var(--gold);font-weight:500}
+.logo .jp{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+nav.pc{display:flex;align-items:center;gap:clamp(14px,2vw,30px)}
+nav.pc a{
+  font-family:var(--en);font-size:12.5px;letter-spacing:.22em;color:var(--muted);
+  transition:color .3s;position:relative;padding:4px 0;
+}
+nav.pc a:hover{color:var(--gold-bright)}
+nav.pc a::after{
+  content:"";position:absolute;left:0;bottom:0;width:0;height:1px;background:var(--gold);transition:width .3s;
+}
+nav.pc a:hover::after{width:100%}
+.head-cta{
+  border:1px solid var(--gold-dim);color:var(--gold-bright)!important;
+  padding:9px 20px!important;font-size:12px!important;
+  transition:background .3s,color .3s!important;
+}
+.head-cta:hover{background:var(--gold);color:var(--ink)!important}
+.head-cta::after{display:none}
+#hamburger{display:none;background:none;border:none;cursor:pointer;z-index:60;width:34px;height:26px;position:relative}
+#hamburger span{position:absolute;left:0;width:100%;height:1px;background:var(--paper);transition:.35s}
+#hamburger span:nth-child(1){top:4px}#hamburger span:nth-child(2){top:13px}#hamburger span:nth-child(3){top:22px}
+body.menu-open #hamburger span:nth-child(1){top:13px;transform:rotate(45deg)}
+body.menu-open #hamburger span:nth-child(2){opacity:0}
+body.menu-open #hamburger span:nth-child(3){top:13px;transform:rotate(-45deg)}
+#mobile-menu{
+  position:fixed;inset:0;z-index:55;background:rgba(14,17,22,.97);backdrop-filter:blur(10px);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:26px;
+  opacity:0;visibility:hidden;transition:.4s;
+}
+body.menu-open #mobile-menu{opacity:1;visibility:visible}
+#mobile-menu a{font-family:var(--en);font-size:20px;letter-spacing:.3em;color:var(--paper)}
+#mobile-menu a small{display:block;text-align:center;font-family:var(--sans);font-size:10px;color:var(--muted);letter-spacing:.2em}
+#mobile-menu .tel{color:var(--gold);font-size:24px;letter-spacing:.1em}
+
+/* ---------- hero（Foliom型：実写パネル×巨大セリフ） ---------- */
+#hero{position:relative;height:100svh;min-height:700px;overflow:hidden;background:#060709}
+#hero::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(ellipse 70% 45% at 50% 28%,rgba(200,164,93,.07),transparent 65%)}
+#hero::after{content:"";position:absolute;inset:0;z-index:4;pointer-events:none;
+  background:linear-gradient(180deg,rgba(6,7,9,.35) 0%,transparent 26%,transparent 60%,rgba(6,7,9,.92) 100%)}
+.hero-eyebrow{
+  position:absolute;top:clamp(84px,12vh,130px);left:50%;transform:translateX(-50%);z-index:1;
+  font-family:var(--en);font-size:clamp(10px,1.1vw,13px);letter-spacing:.55em;text-indent:.55em;
+  color:var(--gold);white-space:nowrap;animation:eyebrowIn 1.4s .2s both;
+}
+@keyframes eyebrowIn{from{opacity:0;transform:translate(-50%,-12px)}to{opacity:1;transform:translate(-50%,0)}}
+.wordmark{
+  position:absolute;top:clamp(96px,15vh,158px);left:0;right:0;z-index:1;text-align:center;
+  font-family:var(--en);font-weight:300;color:var(--paper);
+  font-size:clamp(74px,14.5vw,228px);line-height:1;letter-spacing:-.01em;
+  animation:wordIn 1.8s .4s both;will-change:transform;
+}
+@keyframes wordIn{from{opacity:0;letter-spacing:.08em;filter:blur(8px)}to{opacity:1;letter-spacing:-.01em;filter:blur(0)}}
+.stage{position:absolute;inset:0;z-index:2;perspective:1500px;perspective-origin:50% 40%}
+.shelf{
+  position:absolute;left:calc(50% - min(720px,50%));top:0;
+  width:min(1440px,100%);height:100%;
+  transform-style:preserve-3d;will-change:transform;
+}
+.panel{
+  position:absolute;bottom:25%;width:clamp(170px,21vw,330px);aspect-ratio:3/4;
+  border:1px solid rgba(200,164,93,.22);background:#0c0f14;
+  box-shadow:0 40px 80px rgba(0,0,0,.65);
+  transform:var(--tf);
+  -webkit-box-reflect:below 10px linear-gradient(transparent 55%,rgba(255,255,255,.13));
+  animation:panelIn 1.3s cubic-bezier(.22,.8,.3,1) both;
+}
+.panel img{width:100%;height:100%;object-fit:cover;display:block}
+@keyframes panelIn{from{opacity:0;transform:var(--tf) translateY(90px)}to{opacity:1;transform:var(--tf) translateY(0)}}
+.p1{left:3%;--tf:translateZ(140px) rotateY(-28deg);z-index:9;animation-delay:.55s}
+.p2{left:21.5%;--tf:translateZ(40px) rotateY(-28deg);z-index:8;animation-delay:.7s;filter:brightness(.97)}
+.p3{left:40%;--tf:translateZ(-60px) rotateY(-28deg);z-index:7;animation-delay:.85s;filter:brightness(.93)}
+.p4{left:58.5%;--tf:translateZ(-160px) rotateY(-28deg);z-index:6;animation-delay:1s;filter:brightness(.88)}
+.p5{left:77%;--tf:translateZ(-260px) rotateY(-28deg);z-index:5;animation-delay:1.15s;filter:brightness(.84)}
+.hero-bottom{
+  position:absolute;left:clamp(20px,6vw,90px);right:clamp(20px,6vw,90px);bottom:clamp(46px,8vh,90px);
+  z-index:5;display:flex;justify-content:space-between;align-items:flex-end;gap:26px;flex-wrap:wrap;
+  animation:riseIn 1.2s 1.5s both;
+}
+@keyframes riseIn{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
+h1{
+  font-family:var(--serif);font-weight:600;
+  font-size:clamp(20px,2.4vw,32px);line-height:1.8;letter-spacing:.08em;
+  text-shadow:0 2px 24px rgba(0,0,0,.7);
+}
+h1 .gold{color:var(--gold-bright)}
+h1 small{
+  display:block;font-family:var(--sans);font-weight:300;
+  font-size:clamp(11.5px,1vw,13.5px);color:#aab0bc;letter-spacing:.14em;margin-top:10px;
+}
+.hero-ctas{display:flex;gap:14px;flex-wrap:wrap}
+@media (max-width:760px){
+  .wordmark{font-size:clamp(58px,19vw,110px)}
+  #hero .scroll-cue{display:none}
+  .panel{width:38vw;bottom:37%}
+  .p1{left:-4%}.p2{left:16%}.p3{left:37%}.p4{left:58%}.p5{left:76%}
+  .hero-bottom{flex-direction:column;align-items:flex-start;gap:20px}
+}
+@media (prefers-reduced-motion:reduce){
+  .hero-eyebrow,.wordmark,.panel,.hero-bottom{animation:none}
+}
+
+.btn{
+  display:inline-flex;align-items:center;gap:12px;
+  font-size:14px;letter-spacing:.14em;font-weight:400;
+  padding:17px 34px;transition:.35s;cursor:pointer;border:1px solid transparent;
+}
+.btn .arw{font-family:var(--en);transition:transform .35s}
+.btn:hover .arw{transform:translateX(6px)}
+.btn-gold{background:var(--gold);color:#141414;border-color:var(--gold)}
+.btn-gold:hover{background:var(--gold-bright);border-color:var(--gold-bright);box-shadow:0 8px 40px rgba(200,164,93,.35)}
+.btn-ghost{border-color:rgba(242,238,229,.35);color:var(--paper)}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold-bright)}
+.scroll-cue{
+  position:absolute;right:clamp(24px,4vw,56px);bottom:34px;
+  font-family:var(--en);font-size:10.5px;letter-spacing:.4em;color:var(--muted);
+  writing-mode:vertical-rl;display:flex;align-items:center;gap:12px;
+}
+.scroll-cue::after{content:"";width:1px;height:56px;background:linear-gradient(180deg,var(--gold),transparent);animation:cue 2s ease-in-out infinite}
+@keyframes cue{0%{transform:scaleY(0);transform-origin:top}45%{transform:scaleY(1);transform-origin:top}55%{transform:scaleY(1);transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+/* ---------- shared section ---------- */
+section{position:relative;padding:clamp(80px,12vh,140px) clamp(20px,6vw,90px)}
+.container{max-width:1180px;margin:0 auto}
+.sec-label{
+  font-family:var(--en);font-size:12px;letter-spacing:.5em;color:var(--gold);
+  text-transform:uppercase;display:flex;align-items:center;gap:16px;margin-bottom:18px;
+}
+.sec-label::before{content:"";width:36px;height:1px;background:var(--gold)}
+.sec-title{
+  font-family:var(--serif);font-weight:600;font-size:clamp(24px,3.4vw,40px);
+  line-height:1.6;letter-spacing:.06em;margin-bottom:26px;
+}
+.sec-lead{color:#b9bec9;max-width:760px;font-size:clamp(13.5px,1.3vw,15.5px)}
+
+/* reveal */
+.rv{opacity:0;transform:translateY(34px);transition:opacity .9s cubic-bezier(.22,.8,.3,1),transform .9s cubic-bezier(.22,.8,.3,1)}
+.rv.on{opacity:1;transform:none}
+
+/* ---------- stats ---------- */
+#stats{padding-top:clamp(50px,7vh,80px);padding-bottom:clamp(50px,7vh,80px);border-bottom:1px solid rgba(200,164,93,.12)}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;max-width:1180px;margin:0 auto}
+.stat{padding:10px 28px;border-left:1px solid rgba(200,164,93,.2)}
+.stat .num{font-family:var(--en);font-size:clamp(34px,4.2vw,54px);font-weight:300;color:var(--gold-bright);line-height:1.15}
+.stat .num small{font-family:var(--serif);font-size:.42em;color:var(--gold);margin-left:4px}
+.stat .lbl{font-size:12.5px;color:var(--muted);letter-spacing:.16em;margin-top:6px}
+.stats-note{max-width:1180px;margin:26px auto 0;font-size:11px;color:#6d7480;letter-spacing:.08em}
+
+/* ---------- philosophy ---------- */
+#philosophy{background:var(--ink)}
+#philosophy .grid{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(40px,6vw,90px);align-items:center}
+.ph-quote{
+  font-family:var(--serif);font-size:clamp(20px,2.4vw,29px);line-height:2.1;letter-spacing:.08em;font-weight:500;
+}
+.ph-quote em{font-style:normal;color:var(--gold-bright);border-bottom:1px solid var(--gold-dim);padding-bottom:2px}
+.ph-body{color:#b9bec9;margin-top:30px;font-size:14.5px}
+.ph-values{display:grid;grid-template-columns:1fr;gap:0;border-top:1px solid rgba(200,164,93,.18)}
+.ph-values .v{
+  display:flex;align-items:baseline;gap:22px;padding:20px 6px;
+  border-bottom:1px solid rgba(200,164,93,.18);
+}
+.ph-values .v .no{font-family:var(--en);font-size:13px;color:var(--gold);letter-spacing:.2em;min-width:30px}
+.ph-values .v h3{font-family:var(--serif);font-size:19px;font-weight:600;letter-spacing:.14em;min-width:7.5em}
+.ph-values .v p{font-size:12.5px;color:var(--muted);line-height:1.8}
+
+/* ---------- service ---------- */
+#service{background:linear-gradient(180deg,var(--ink) 0%,#11151d 100%)}
+.svc-rows{margin-top:30px}
+.svc-row{
+  display:grid;grid-template-columns:1.12fr .88fr;gap:clamp(30px,5vw,80px);
+  align-items:center;padding:clamp(46px,7vh,80px) 0;
+  border-bottom:1px solid rgba(200,164,93,.14);
+}
+.svc-rows .svc-row:first-child{border-top:1px solid rgba(200,164,93,.14)}
+.svc-row.rev .svc-img{order:2}
+.svc-row.rev .svc-txt{order:1}
+.svc-img{position:relative}
+.svc-img .ph{overflow:hidden;aspect-ratio:16/10;background:#0c0f14}
+.svc-img img{
+  width:100%;height:100%;object-fit:cover;display:block;
+  filter:saturate(.9) brightness(.94);transition:transform 1.2s cubic-bezier(.22,.8,.3,1);
+}
+.svc-row:hover .svc-img img{transform:scale(1.045)}
+.svc-img .no{
+  position:absolute;top:-32px;left:-12px;z-index:2;pointer-events:none;
+  font-family:var(--en);font-size:clamp(60px,7vw,104px);font-weight:300;line-height:1;
+  color:transparent;-webkit-text-stroke:1px rgba(200,164,93,.55);
+}
+.svc-row.rev .svc-img .no{left:auto;right:-12px}
+.svc-txt .en{font-family:var(--en);font-size:12px;letter-spacing:.34em;color:var(--gold);text-transform:uppercase;display:block;margin-bottom:14px}
+.svc-txt h3{font-family:var(--serif);font-size:clamp(21px,2.2vw,28px);font-weight:600;letter-spacing:.1em;margin-bottom:18px}
+.svc-txt p{font-size:14px;color:#aab0bc;line-height:2.1}
+.txt-link{
+  display:inline-flex;align-items:baseline;gap:10px;margin-top:26px;
+  font-size:13px;letter-spacing:.14em;color:var(--gold-bright);
+  border-bottom:1px solid rgba(200,164,93,.4);padding-bottom:6px;transition:.35s;
+}
+.txt-link .arw{font-family:var(--en);transition:transform .35s}
+.txt-link:hover{color:#fff;border-color:#fff}
+.txt-link:hover .arw{transform:translateX(6px)}
+
+/* ---------- works / ECOLO ---------- */
+#works{background:#11151d}
+.ecolo-def{
+  display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin:34px 0 10px;
+  font-family:var(--en);font-size:clamp(17px,2.2vw,24px);letter-spacing:.18em;color:var(--paper);
+}
+.ecolo-def .w{color:var(--gold-bright)}
+.ecolo-def .x{color:var(--muted);font-size:.7em}
+.works-mag{display:grid;grid-template-columns:repeat(12,1fr);gap:clamp(18px,2.4vw,34px);margin-top:60px}
+.wk{position:relative}
+.wk .ph{overflow:hidden;background:#0c0f14}
+.wk img{
+  width:100%;height:100%;object-fit:cover;display:block;
+  filter:saturate(.92) brightness(.95);transition:transform 1.2s cubic-bezier(.22,.8,.3,1);
+}
+.wk:hover img{transform:scale(1.05)}
+.wk figcaption{display:flex;align-items:baseline;gap:14px;margin-top:16px;flex-wrap:wrap}
+.wk figcaption h3{font-family:var(--en);font-size:15px;letter-spacing:.24em;color:var(--gold-bright);font-weight:400}
+.wk figcaption .cat{font-size:11.5px;color:var(--muted);letter-spacing:.16em}
+.wk .desc{font-size:12.5px;color:#aab0bc;line-height:1.95;margin-top:8px;max-width:46em}
+.wk-a{grid-column:1/8}.wk-a .ph{aspect-ratio:16/10}
+.wk-b{grid-column:8/13;margin-top:clamp(40px,7vw,110px)}.wk-b .ph{aspect-ratio:3/4}
+.wk-c{grid-column:1/6}.wk-c .ph{aspect-ratio:3/4}
+.wk-d{grid-column:6/13;margin-top:clamp(40px,6vw,90px)}.wk-d .ph{aspect-ratio:16/10}
+.works-note{margin-top:34px;font-size:11px;color:#6d7480;letter-spacing:.1em}
+
+/* ---------- vision band（全幅・視差CTA） ---------- */
+#vision{position:relative;padding:clamp(110px,20vh,190px) clamp(20px,6vw,90px);overflow:hidden;isolation:isolate}
+#vision .bg{position:absolute;inset:-14% 0;z-index:-2}
+#vision .bg img{width:100%;height:100%;object-fit:cover;filter:brightness(.48) saturate(.92);will-change:transform}
+#vision::after{content:"";position:absolute;inset:0;z-index:-1;
+  background:linear-gradient(180deg,#11151d 0%,rgba(17,21,29,0) 24%,rgba(17,21,29,0) 72%,#151a24 100%)}
+#vision .inner{max-width:1180px;margin:0 auto;text-align:center}
+#vision .q{
+  font-family:var(--serif);font-weight:600;font-size:clamp(24px,3.6vw,44px);
+  letter-spacing:.1em;line-height:1.9;text-shadow:0 2px 30px rgba(0,0,0,.8);
+}
+#vision .q .gold{color:var(--gold-bright)}
+#vision .sub{margin-top:18px;color:#c9cdd6;font-size:clamp(12.5px,1.2vw,14.5px);letter-spacing:.12em}
+#vision .cta-box{margin-top:40px;display:flex;justify-content:center;gap:16px;flex-wrap:wrap}
+
+/* ---------- partner ---------- */
+#partner{
+  background:linear-gradient(160deg,#151a24 0%,#0e1116 55%),var(--ink-2);
+  border-top:1px solid rgba(200,164,93,.14);border-bottom:1px solid rgba(200,164,93,.14);
+}
+#partner .grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(40px,6vw,90px);align-items:start}
+.pt-list{display:flex;flex-direction:column;border-top:1px solid rgba(200,164,93,.2)}
+.pt{display:flex;gap:22px;padding:26px 4px;border-bottom:1px solid rgba(200,164,93,.2);align-items:baseline}
+.pt .no{font-family:var(--en);color:var(--gold);font-size:13px;letter-spacing:.2em;min-width:32px}
+.pt h3{font-family:var(--serif);font-size:17.5px;font-weight:600;letter-spacing:.08em;margin-bottom:6px}
+.pt p{font-size:13px;color:#aab0bc;line-height:1.9}
+#partner .cta-box{margin-top:36px;display:flex;gap:16px;flex-wrap:wrap}
+
+/* ---------- company ---------- */
+#company table{width:100%;border-collapse:collapse;margin-top:30px}
+#company th,#company td{
+  text-align:left;padding:19px 10px;border-bottom:1px solid rgba(255,255,255,.08);
+  font-size:14px;font-weight:300;vertical-align:top;
+}
+#company th{width:190px;color:var(--gold);letter-spacing:.2em;font-family:var(--serif);font-weight:600;white-space:nowrap}
+#company td{color:#ccd1da;letter-spacing:.06em}
+#company .grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(40px,6vw,80px)}
+.mission{border-top:1px solid rgba(200,164,93,.2)}
+.mission li{
+  list-style:none;padding:16px 4px;border-bottom:1px solid rgba(200,164,93,.2);
+  font-size:14px;color:#ccd1da;display:flex;gap:16px;align-items:baseline;
+}
+.mission li::before{content:"—";color:var(--gold);flex-shrink:0}
+
+/* ---------- recruit ---------- */
+#recruit{background:#11151d;border-top:1px solid rgba(200,164,93,.1)}
+#recruit .grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(40px,6vw,80px);align-items:center}
+.rc-points li{
+  list-style:none;padding:14px 0;font-size:14.5px;color:#ccd1da;
+  display:flex;gap:14px;align-items:baseline;
+}
+.rc-points li::before{content:"◆";color:var(--gold);font-size:9px;flex-shrink:0;transform:translateY(-2px)}
+
+/* ---------- contact ---------- */
+#contact{background:linear-gradient(180deg,#11151d,var(--ink))}
+#contact .grid{display:grid;grid-template-columns:1fr 1.1fr;gap:clamp(44px,6vw,90px);margin-top:20px}
+.tel-big{font-family:var(--en);font-size:clamp(30px,3.6vw,44px);color:var(--gold-bright);letter-spacing:.06em;line-height:1.2}
+.tel-big a:hover{color:var(--gold)}
+.tel-note{font-size:12.5px;color:var(--muted);margin-top:8px;letter-spacing:.1em}
+.c-line{margin:30px 0;height:1px;background:rgba(200,164,93,.2)}
+.c-addr{font-size:14px;color:#ccd1da;line-height:2.1}
+form{display:flex;flex-direction:column;gap:18px}
+.f-row{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+label{display:flex;flex-direction:column;gap:8px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+label b{color:var(--gold);font-weight:400;margin-left:6px}
+input,textarea,select{
+  background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.12);
+  padding:14px 16px;color:var(--paper);font-family:var(--sans);font-size:14px;
+  transition:border-color .3s;border-radius:0;-webkit-appearance:none;appearance:none;
+}
+select{background-image:linear-gradient(45deg,transparent 50%,var(--gold) 50%),linear-gradient(135deg,var(--gold) 50%,transparent 50%);
+  background-position:calc(100% - 20px) 50%,calc(100% - 15px) 50%;background-size:5px 5px;background-repeat:no-repeat}
+select option{background:var(--ink-2);color:var(--paper)}
+input:focus,textarea:focus,select:focus{outline:none;border-color:var(--gold)}
+textarea{min-height:130px;resize:vertical}
+.f-note{font-size:11px;color:#6d7480;line-height:1.8}
+
+/* ---------- footer ---------- */
+footer{
+  border-top:1px solid rgba(200,164,93,.14);
+  padding:44px clamp(20px,6vw,90px);display:flex;justify-content:space-between;
+  align-items:center;gap:20px;flex-wrap:wrap;
+}
+footer .copy{font-size:11px;color:#6d7480;letter-spacing:.14em}
+footer nav{display:flex;gap:22px;flex-wrap:wrap}
+footer nav a{font-family:var(--en);font-size:11px;letter-spacing:.24em;color:var(--muted);transition:color .3s}
+footer nav a:hover{color:var(--gold-bright)}
+
+/* ---------- floating CTA (mobile) ---------- */
+#float-cta{
+  position:fixed;left:0;right:0;bottom:0;z-index:45;display:none;
+  grid-template-columns:1fr 1fr;border-top:1px solid rgba(200,164,93,.3);
+}
+#float-cta a{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  padding:15px 8px;font-size:13px;letter-spacing:.1em;
+}
+#float-cta .f-tel{background:rgba(14,17,22,.95);color:var(--gold-bright);backdrop-filter:blur(8px)}
+#float-cta .f-form{background:var(--gold);color:#141414;font-weight:500}
+
+/* ---------- responsive ---------- */
+@media (max-width:1000px){
+  .svc-row{grid-template-columns:1fr;gap:26px}
+  .svc-row.rev .svc-img{order:0}
+  .svc-row.rev .svc-txt{order:1}
+  .svc-img .no{left:auto;right:8px;top:-26px}
+  .svc-row.rev .svc-img .no{right:8px}
+  .works-mag > *{grid-column:1/13 !important;margin-top:0 !important}
+  #philosophy .grid,#partner .grid,#company .grid,#recruit .grid,#contact .grid{grid-template-columns:1fr}
+  .stats-grid{grid-template-columns:repeat(2,1fr);row-gap:34px}
+}
+@media (max-width:760px){
+  nav.pc{display:none}
+  #hamburger{display:block}
+  #float-cta{display:grid}
+  body{padding-bottom:52px}
+  .f-row{grid-template-columns:1fr}
+  .hero-ctas .btn{width:100%;justify-content:center}
+}
+@media (prefers-reduced-motion:reduce){
+  .rv{transition:none;opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<div id="loader">
+  <div class="mark">Promoters</div>
+  <div class="bar"><i></i></div>
+</div>
+
+<header id="header">
+  <a class="logo" href="#hero">
+    <span class="en">PRO<b>MOTERS</b></span>
+    <span class="jp">株式会社プロモーターズ</span>
+  </a>
+  <nav class="pc">
+    <a href="#philosophy">Philosophy</a>
+    <a href="#service">Service</a>
+    <a href="#works">Works</a>
+    <a href="#partner">Partner</a>
+    <a href="#company">Company</a>
+    <a href="#recruit">Recruit</a>
+    <a href="#contact" class="head-cta">ご相談・お問い合わせ</a>
+  </nav>
+  <button id="hamburger" aria-label="メニュー"><span></span><span></span><span></span></button>
+</header>
+
+<div id="mobile-menu">
+  <a href="#philosophy">PHILOSOPHY<small>理念</small></a>
+  <a href="#service">SERVICE<small>事業内容</small></a>
+  <a href="#works">WORKS<small>ECOLOシリーズ</small></a>
+  <a href="#partner">PARTNER<small>投資家・事業パートナーの方へ</small></a>
+  <a href="#company">COMPANY<small>会社概要</small></a>
+  <a href="#recruit">RECRUIT<small>採用情報</small></a>
+  <a href="#contact">CONTACT<small>お問い合わせ</small></a>
+  <a class="tel" href="tel:0335417000">03-3541-7000</a>
+</div>
+
+<!-- ================= HERO ================= -->
+<section id="hero">
+  <p class="hero-eyebrow">株式会社プロモーターズ — GINZA, TOKYO</p>
+  <div class="wordmark">Promoters</div>
+  <div class="stage">
+    <div class="shelf" id="shelf">
+      <figure class="panel p1"><img src="img/panel_1.jpg" alt="銀座の商業建築"></figure>
+      <figure class="panel p2"><img src="img/panel_2.jpg" alt="都心の高層タワー"></figure>
+      <figure class="panel p3"><img src="img/panel_3.jpg" alt="黄昏の東京タワーと街並み"></figure>
+      <figure class="panel p4"><img src="img/panel_6.jpg" alt="ガラスカーテンウォールのオフィスビル"></figure>
+      <figure class="panel p5"><img src="img/panel_8.jpg" alt="木格子のモダンレジデンス"></figure>
+    </div>
+  </div>
+  <div class="hero-bottom">
+    <h1>不動産は、<span class="gold">「保有」</span>から<span class="gold">「活用」</span>の時代へ。<small>綿密なマーケティングに基づく開発・再生・運用で、不動産のポテンシャルを最大化する。</small></h1>
+    <div class="hero-ctas">
+      <a class="btn btn-gold" href="#contact">物件・土地活用の無料相談<span class="arw">→</span></a>
+      <a class="btn btn-ghost" href="#partner">投資家・パートナーの方へ<span class="arw">→</span></a>
+    </div>
+  </div>
+  <div class="scroll-cue">SCROLL</div>
+</section>
+
+<!-- ================= STATS ================= -->
+<section id="stats">
+  <div class="stats-grid">
+    <div class="stat rv"><div class="num"><span data-count="2008">2008</span><small>年</small></div><div class="lbl">創業（銀座にて18年）</div></div>
+    <div class="stat rv"><div class="num"><span data-count="3">3</span><small>事業</small></div><div class="lbl">開発・再生・管理の一気通貫</div></div>
+    <div class="stat rv"><div class="num"><span data-count="100">100</span><small>%</small></div><div class="lbl">ご紹介・口コミによるご依頼※</div></div>
+    <div class="stat rv"><div class="num">GINZA<small></small></div><div class="lbl">東京・銀座2丁目 本社</div></div>
+  </div>
+  <p class="stats-note rv">※ 当社は広告的な営業活動を行っておりません。お客様からのご紹介と口コミのみでご依頼をいただいております。</p>
+</section>
+
+<!-- ================= PHILOSOPHY ================= -->
+<section id="philosophy">
+  <div class="container">
+    <p class="sec-label rv">Philosophy</p>
+    <h2 class="sec-title rv">時代を超えた価値を、<br>常識に捉われずに創造する。</h2>
+    <div class="grid" style="margin-top:40px">
+      <div class="rv">
+        <p class="ph-quote">日本の限りある土地を、<em>最大限高度利用</em>する。<br>「東京」を、世界中の人々が<em>憧れる都市</em>にする。</p>
+        <p class="ph-body">お客様やオーナー様の豊かなライフスタイルを構築するパートナーでありたい——。その想いから、土地・建物・開発・売買・賃貸・管理のあらゆる情報提供、収益性の高い事業の企画立案、投資家様やオーナー様のマッチングまで、一貫性をもって取り組んでいます。建築設計を通した環境共生・持続型エコロジー社会の構築も、私たちの使命です。</p>
+      </div>
+      <div class="ph-values rv">
+        <div class="v"><span class="no">01</span><h3>機能美</h3><p>見た目の美しさは当然。機能性を兼ね備えた、他にない魅力を。</p></div>
+        <div class="v"><span class="no">02</span><h3>先見性</h3><p>プロだからこそ次の時代を予測し、攻めの姿勢で収益をもたらす。</p></div>
+        <div class="v"><span class="no">03</span><h3>永続性</h3><p>お客様とその大切な方々の幸せが、いつまでも続くように。</p></div>
+        <div class="v"><span class="no">04</span><h3>革新性</h3><p>今日の当たり前に捉われず、時代の先端をいく価値創造に挑む。</p></div>
+        <div class="v"><span class="no">05</span><h3>独自性</h3><p>考え抜いたアイデアで勝負する。まだない企画で勝ちにいく。</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SERVICE ================= -->
+<section id="service">
+  <div class="container">
+    <p class="sec-label rv">Service</p>
+    <h2 class="sec-title rv">開発・再生・管理。<br>不動産の生涯に、一気通貫で伴走する。</h2>
+    <p class="sec-lead rv">企画力と実行力に加え、設計・建築、権利関係の調整、資産形成コンサルティングまで。幅広い事業領域とユニークな発想で、トップレベルの不動産コンサルティングを提供します。</p>
+    <div class="svc-rows">
+      <article class="svc-row rv">
+        <div class="svc-img"><span class="no">01</span><div class="ph"><img src="img/svc_dev.jpg" alt="夕暮れの東京の高層ビル群" loading="lazy"></div></div>
+        <div class="svc-txt">
+          <span class="en">Development</span>
+          <h3>不動産開発事業</h3>
+          <p>自社で取得・出資した土地および建物を開発し、保有資産の有効活用を実現。不動産の価値を見極め、開発によってさらなる価値を創出し、資産の健全な運用へと繋げます。土地の仕入れから企画・開発・売却まで、一気通貫で。</p>
+          <a class="txt-link" href="#contact">土地・物件の情報をお持ちの方はこちら<span class="arw">→</span></a>
+        </div>
+      </article>
+      <article class="svc-row rev rv">
+        <div class="svc-img"><span class="no">02</span><div class="ph"><img src="img/svc_reno.jpg" alt="再生を待つ味わいのある建物" loading="lazy"></div></div>
+        <div class="svc-txt">
+          <span class="en">Renovation &amp; Revitalization</span>
+          <h3>不動産再生事業</h3>
+          <p>低稼働・低収益の不動産、未利用や不良債権化した不動産を、時代のニーズに合わせて「再生」。ビルからレジデンスまで幅広い中古物件に付加価値を創出し、優良不動産として投資家・事業法人の皆様にご提供します。</p>
+          <a class="txt-link" href="#contact">収益が出ていない物件のご相談はこちら<span class="arw">→</span></a>
+        </div>
+      </article>
+      <article class="svc-row rv">
+        <div class="svc-img"><span class="no">03</span><div class="ph"><img src="img/svc_mng.jpg" alt="緑のある集合住宅の中庭" loading="lazy"></div></div>
+        <div class="svc-txt">
+          <span class="en">Property Management</span>
+          <h3>賃貸管理事業</h3>
+          <p>オーナー様に代わり賃貸物件の管理・運営を担当。建物管理・家賃管理から警備・清掃、トラブル対応まで。入居者様には身近な存在として、オーナー様の立場ではキャッシュフローの最大化に努めます。</p>
+          <a class="txt-link" href="#contact">管理でお困りのオーナー様はこちら<span class="arw">→</span></a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= WORKS / ECOLO ================= -->
+<section id="works">
+  <div class="container">
+    <p class="sec-label rv">Works — ECOLO Series</p>
+    <h2 class="sec-title rv">愛を込めて、<br>真に大切な住まいの環境を創造する。</h2>
+    <div class="ecolo-def rv">
+      <span class="w">ECOLOGY</span><span class="x">×</span><span class="w">ECONOMY</span><span class="x">×</span><span class="w">LOVE</span><span class="x">＝</span><span style="font-size:1.15em;letter-spacing:.3em;color:var(--paper)">ECOLO</span>
+    </div>
+    <p class="sec-lead rv">住まいが次の世代にも引き継がれ、あたたかく愛され続ける環境であること。環境に配慮した自然エネルギーで経済的であること。企業理念を体現するブランドが「エコロ」です。</p>
+    <div class="works-mag">
+      <figure class="wk wk-a rv">
+        <div class="ph"><img src="img/wk_house.jpg" alt="木の温もりのあるモダンな戸建て" loading="lazy"></div>
+        <figcaption><h3>ECOLO HOUSE</h3><span class="cat">新築個人住宅</span></figcaption>
+        <p class="desc">太陽光発電システム完備・オール電化の環境にやさしい新築戸建て。補助金申請から売電による資産形成まで幅広くサポート。</p>
+      </figure>
+      <figure class="wk wk-b rv">
+        <div class="ph"><img src="img/wk_cube.jpg" alt="コンクリートのキューブ型集合住宅" loading="lazy"></div>
+        <figcaption><h3>ECOLO CUBE</h3><span class="cat">RC造 共同住宅</span></figcaption>
+        <p class="desc">スタイリッシュで高級感あふれるRC共同住宅。投資用一棟アパートメントとして個人オーナー様からプロの事業主様まで支持。</p>
+      </figure>
+      <figure class="wk wk-c rv">
+        <div class="ph"><img src="img/wk_room.jpg" alt="陽の入る木造住宅の室内" loading="lazy"></div>
+        <figcaption><h3>ECOLO ROOM</h3><span class="cat">木造 共同住宅・シェアハウス</span></figcaption>
+        <p class="desc">太陽光完備・オール電化の木造共同住宅。シェアハウスも多数手掛け、共同生活を通じたあたたかい環境づくりに注力。</p>
+      </figure>
+      <figure class="wk wk-d rv">
+        <div class="ph"><img src="img/wk_town.jpg" alt="夕暮れの住宅街の街角" loading="lazy"></div>
+        <figcaption><h3>ECOLO TOWN</h3><span class="cat">高齢者向け住宅・街づくり</span></figcaption>
+        <p class="desc">自治体と連携した最先端の街づくり。サービス付き高齢者向け住宅の設計、訪問医療・介護との連携で、住みやすく愛あふれる街へ。</p>
+      </figure>
+    </div>
+    <p class="works-note rv">※写真はイメージです。</p>
+  </div>
+</section>
+
+<!-- ================= VISION ================= -->
+<section id="vision">
+  <div class="bg"><img src="img/banner.jpg" alt="夜の東京の街並み" loading="lazy"></div>
+  <div class="inner rv">
+    <p class="q">「東京」を、世界中の人々が<span class="gold">憧れる都市</span>に。</p>
+    <p class="sub">物件のこと、土地のこと。売るか・貸すか・育てるか、迷っている段階でも構いません。</p>
+    <div class="cta-box">
+      <a class="btn btn-gold" href="tel:0335417000">03-3541-7000 に相談する<span class="arw">→</span></a>
+      <a class="btn btn-ghost" href="#contact">フォームで問い合わせる<span class="arw">→</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PARTNER ================= -->
+<section id="partner">
+  <div class="container">
+    <div class="grid">
+      <div class="rv">
+        <p class="sec-label">For Investors &amp; Partners</p>
+        <h2 class="sec-title">共に、都市の価値を<br>創りませんか。</h2>
+        <p class="sec-lead">当社は創業以来、投資家様・オーナー様・事業パートナー様とのマッチングを一貫して手掛けてきました。収益性の高い事業企画と確かな目利きで、皆様の資産と事業に貢献します。長期的な視野で応援してくださる株主・投資家の皆様を大切にすることが、私たちの使命です。</p>
+        <div class="cta-box">
+          <a class="btn btn-gold" href="#contact">パートナーとして相談する<span class="arw">→</span></a>
+          <a class="btn btn-ghost" href="tel:0335417000">03-3541-7000<span class="arw">→</span></a>
+        </div>
+      </div>
+      <div class="pt-list rv">
+        <div class="pt"><span class="no">01</span><div><h3>収益物件・土地情報のお持ち込み</h3><p>売却をご検討中の収益物件、開発余地のある土地。自社取得・出資による迅速な判断が可能です。</p></div></div>
+        <div class="pt"><span class="no">02</span><div><h3>共同開発・共同出資（JV）</h3><p>開発・再生プロジェクトへの共同参画。企画立案から出口戦略まで、一気通貫の体制でご一緒します。</p></div></div>
+        <div class="pt"><span class="no">03</span><div><h3>低稼働・不良債権化物件の再生</h3><p>収益を生んでいない不動産を、時代のニーズに合わせ優良資産へ。再生実績に基づくご提案をします。</p></div></div>
+        <div class="pt"><span class="no">04</span><div><h3>投資家様・オーナー様のマッチング</h3><p>資産形成コンサルティングを通じ、投資家様と物件・事業の最適なマッチングを実現します。</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= COMPANY ================= -->
+<section id="company">
+  <div class="container">
+    <p class="sec-label rv">Company</p>
+    <h2 class="sec-title rv">会社概要</h2>
+    <div class="grid">
+      <div class="rv">
+        <table>
+          <tr><th>商号</th><td>株式会社Promoters（Promoters.Co.Ltd）</td></tr>
+          <tr><th>代表者</th><td>林　明慶</td></tr>
+          <tr><th>創業</th><td>2008年7月1日</td></tr>
+          <tr><th>所在地</th><td>〒104-0061<br>東京都中央区銀座2-9-13 GINZAⅡビル 7F</td></tr>
+          <tr><th>電話番号</th><td><a href="tel:0335417000" style="color:var(--gold-bright)">03-3541-7000</a></td></tr>
+          <tr><th>FAX番号</th><td>03-3541-7005</td></tr>
+          <tr><th>事業内容</th><td>不動産開発事業／不動産再生事業／賃貸管理事業</td></tr>
+          <tr><th>資本金</th><td>1,000万円</td></tr>
+          <tr><th>決算期</th><td>3月末</td></tr>
+        </table>
+      </div>
+      <div class="rv">
+        <h3 style="font-family:var(--serif);font-size:19px;letter-spacing:.2em;color:var(--gold);margin-bottom:18px">使命 — MISSION</h3>
+        <ul class="mission">
+          <li>社員とその家族を幸せにします。</li>
+          <li>共に協力してくれるビジネスパートナーを豊かにします。</li>
+          <li>顧客を幸せにします。</li>
+          <li>地域社会に貢献し、不動産業界を活性化させます。</li>
+          <li>長期的な視野で応援してくださる株主、投資家を大切にします。</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= RECRUIT ================= -->
+<section id="recruit">
+  <div class="container">
+    <div class="grid">
+      <div class="rv">
+        <p class="sec-label">Recruit</p>
+        <h2 class="sec-title">一流の人脈と、<br>一流のフィールドで働く。</h2>
+        <p class="sec-lead">当社は営業活動を行いません。すべてお客様からのご紹介で、お客様が途切れたことがない——それが一流の証拠です。小さな会社ですが、業務水準はハイレベル。不動産コンサルタントのプロへと成長できる環境があります。</p>
+        <div style="margin-top:32px"><a class="btn btn-ghost" href="#contact">採用について問い合わせる<span class="arw">→</span></a></div>
+      </div>
+      <ul class="rc-points rv">
+        <li>インセンティブは青天井。結果を出した分だけ還元する方針</li>
+        <li>売買のみならず建築・設計・資産形成コンサルまで幅広く経験</li>
+        <li>業界未経験者歓迎。学ぶ意欲と挑戦するベンチャーマインドを重視</li>
+        <li>完全週休2日制・祝日・GW・夏季/年末年始・有給/慶弔休暇</li>
+        <li>給与参考例：28歳営業　基本給30万円/月＋インセンティブ200万円</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CONTACT ================= -->
+<section id="contact">
+  <div class="container">
+    <p class="sec-label rv">Contact</p>
+    <h2 class="sec-title rv">まずは、お気軽に<br>ご相談ください。</h2>
+    <div class="grid">
+      <div class="rv">
+        <p class="sec-lead">物件の売却・活用、投資のご相談、共同開発のご提案、採用について——どんなことでもお気軽にどうぞ。</p>
+        <div class="c-line"></div>
+        <p class="tel-big"><a href="tel:0335417000">03-3541-7000</a></p>
+        <p class="tel-note">受付時間 10:00–19:00（FAX 03-3541-7005）</p>
+        <div class="c-line"></div>
+        <p class="c-addr">株式会社Promoters<br>〒104-0061 東京都中央区銀座2-9-13<br>GINZAⅡビル 7F<br><span style="color:var(--muted);font-size:12px">東京メトロ銀座線・有楽町線「銀座駅」「銀座一丁目駅」より徒歩圏内</span></p>
+      </div>
+      <form class="rv" id="contact-form">
+        <div class="f-row">
+          <label><span>お名前<b>※必須</b></span><input type="text" name="name" required placeholder="山田 太郎"></label>
+          <label><span>E-mail<b>※必須</b></span><input type="email" name="email" required placeholder="you@example.com"></label>
+        </div>
+        <div class="f-row">
+          <label>電話番号<input type="tel" name="tel" placeholder="090-0000-0000"></label>
+          <label>会社名<input type="text" name="company" placeholder="株式会社〇〇"></label>
+        </div>
+        <label>ご相談の種類
+          <select name="type">
+            <option>物件の売却・査定について</option>
+            <option>土地活用・開発について</option>
+            <option>物件の再生・リノベーションについて</option>
+            <option>賃貸管理について</option>
+            <option>投資・共同開発・パートナーシップについて</option>
+            <option>採用について</option>
+            <option>その他</option>
+          </select>
+        </label>
+        <label><span>お問い合わせ内容<b>※必須</b></span><textarea name="message" required placeholder="ご相談内容をご記入ください"></textarea></label>
+        <button type="submit" class="btn btn-gold" style="justify-content:center">送信する<span class="arw">→</span></button>
+        <p class="f-note">ご提供いただいた個人情報は、個人情報保護法および関連法規に準拠して適正に管理し、当社サービスのご提供および業務管理に必要な最小限の範囲でのみ利用します。第三者への開示は、ご本人の同意がある場合等を除き行いません。送信をもって上記にご同意いただいたものとみなします。</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <a class="logo" href="#hero">
+    <span class="en" style="font-size:16px">PRO<b>MOTERS</b></span>
+  </a>
+  <nav>
+    <a href="#philosophy">PHILOSOPHY</a>
+    <a href="#service">SERVICE</a>
+    <a href="#works">WORKS</a>
+    <a href="#partner">PARTNER</a>
+    <a href="#company">COMPANY</a>
+    <a href="#recruit">RECRUIT</a>
+    <a href="#contact">CONTACT</a>
+  </nav>
+  <p class="copy">© Promoters.Co.Ltd All Rights Reserved.</p>
+</footer>
+
+<div id="float-cta">
+  <a class="f-tel" href="tel:0335417000">☎ 03-3541-7000</a>
+  <a class="f-form" href="#contact">無料相談はこちら</a>
+</div>
+
+<script>
+/* ============================================================
+   PROMOTERS — Hero parallax & UI
+   Built with Claude Fable 5
+   ============================================================ */
+(function(){
+  function easeOutCubic(t){ return 1 - Math.pow(1-t, 3); }
+
+  /* ヒーロー：マウスに合わせて実写パネルの棚がわずかに回るパララックス */
+  var hero = document.getElementById('hero');
+  var shelf = document.getElementById('shelf');
+  var wm = document.querySelector('.wordmark');
+  if(hero && shelf && matchMedia('(pointer:fine)').matches){
+    var target = 0, cur = 0;
+    hero.addEventListener('mousemove', function(e){
+      target = e.clientX / window.innerWidth - 0.5;
+    }, {passive:true});
+    (function loop(){
+      cur += (target - cur) * 0.06;
+      shelf.style.transform = 'rotateY(' + (cur * 5).toFixed(3) + 'deg) translateX(' + (cur * -22).toFixed(1) + 'px)';
+      wm.style.transform = 'translateX(' + (cur * -28).toFixed(1) + 'px)';
+      requestAnimationFrame(loop);
+    })();
+  }
+
+  /* ビジョンバンドの背景視差 */
+  var vsec = document.getElementById('vision');
+  var vbg = vsec ? vsec.querySelector('.bg img') : null;
+  if(vbg){
+    window.addEventListener('scroll', function(){
+      var r = vsec.getBoundingClientRect();
+      if(r.bottom > 0 && r.top < window.innerHeight){
+        vbg.style.transform = 'translateY(' + ((r.top + r.height/2 - window.innerHeight/2) * -0.12).toFixed(1) + 'px)';
+      }
+    }, {passive:true});
+  }
+
+  /* ============ UI ============ */
+  window.addEventListener('load', function(){
+    setTimeout(function(){ document.getElementById('loader').classList.add('done'); }, 500);
+  });
+  setTimeout(function(){ document.getElementById('loader').classList.add('done'); }, 2600); /* 保険 */
+
+  var header = document.getElementById('header');
+  window.addEventListener('scroll', function(){
+    header.classList.toggle('scrolled', window.scrollY > 40);
+  }, {passive:true});
+
+  document.getElementById('hamburger').addEventListener('click', function(){
+    document.body.classList.toggle('menu-open');
+  });
+  document.querySelectorAll('#mobile-menu a').forEach(function(a){
+    a.addEventListener('click', function(){ document.body.classList.remove('menu-open'); });
+  });
+
+  /* アンカーのスムーススクロール（CSS scroll-behaviorは使わない：
+     プログラムスクロールや全画面キャプチャと干渉するため） */
+  document.querySelectorAll('a[href^="#"]').forEach(function(a){
+    a.addEventListener('click', function(e){
+      var t = document.querySelector(a.getAttribute('href'));
+      if(!t) return;
+      e.preventDefault();
+      t.scrollIntoView({behavior:'smooth'});
+    });
+  });
+
+  /* スクロール出現 */
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if(en.isIntersecting){ en.target.classList.add('on'); io.unobserve(en.target); }
+    });
+  }, {threshold:0.12});
+  document.querySelectorAll('.rv').forEach(function(el){ io.observe(el); });
+
+  /* 数字カウントアップ */
+  var cio = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if(!en.isIntersecting) return;
+      cio.unobserve(en.target);
+      var el = en.target, target = parseInt(el.dataset.count,10), t0 = null;
+      function step(ts){
+        if(!t0) t0 = ts;
+        var p = Math.min((ts-t0)/1400, 1);
+        el.textContent = Math.round(target * easeOutCubic(p)).toString();
+        if(p<1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    });
+  }, {threshold:0.5});
+  document.querySelectorAll('[data-count]').forEach(function(el){ cio.observe(el); });
+
+  /* フォーム → メール作成画面を開く
+     ※送信先アドレスは要確認（仮: info@promoters.co.jp）。
+       フォームサービス(Formspree等)接続に差し替え推奨 */
+  document.getElementById('contact-form').addEventListener('submit', function(e){
+    e.preventDefault();
+    var f = e.target;
+    var body = [
+      'お名前: ' + f.name.value,
+      'E-mail: ' + f.email.value,
+      '電話番号: ' + (f.tel.value||'—'),
+      '会社名: ' + (f.company.value||'—'),
+      'ご相談の種類: ' + f.type.value,
+      '',
+      f.message.value
+    ].join('\n');
+    location.href = 'mailto:info@promoters.co.jp'
+      + '?subject=' + encodeURIComponent('【HPお問い合わせ】' + f.type.value)
+      + '&body=' + encodeURIComponent(body);
+  });
+})();
+</script>
+</body>
+</html>
