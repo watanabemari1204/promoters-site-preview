@@ -1,0 +1,4 @@
+# プレビュー段階（promoters-site-preview）につき全面Disallow。
+# 本番ドメイン promoters.co.jp 移行時に Allow: / へ変更すること（specs/15参照）
+User-agent: *
+Disallow: /
