@@ -3,6 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- セキュリティ：外部スクリプト読込・他ドメインへの通信を遮断（フォームはmailtoのみでサーバー送信なし）。詳細はspecs/04参照 -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self' mailto:;">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <title>株式会社Promoters｜不動産は「保有」から「活用」の時代へ — 銀座の不動産開発・再生・管理</title>
 <meta name="description" content="株式会社Promoters（東京・銀座）。綿密なマーケティングに基づく不動産開発・不動産再生・賃貸管理の一気通貫体制で、不動産のポテンシャルを最大化します。収益物件・土地活用・共同開発のご相談は03-3541-7000へ。">
 <!-- プレビュー段階（promoters-site-preview）につきnoindex。本番ドメインpromoters.co.jp移行時に外すこと（specs/15参照） -->
