@@ -171,8 +171,8 @@ body.menu-open #mobile-menu{opacity:1;visibility:visible}
 }
 .panel img{width:100%;height:100%;object-fit:cover;display:block}
 @keyframes panelIn{from{opacity:0;transform:var(--tf) translateY(90px)}to{opacity:1;transform:var(--tf) translateY(0)}}
-.p1{left:3%;--tf:translateZ(140px) rotateY(-28deg);z-index:9;animation-delay:.55s}
-.p2{left:21.5%;--tf:translateZ(40px) rotateY(-28deg);z-index:8;animation-delay:.7s;filter:brightness(.97)}
+.p1{left:9%;--tf:translateZ(140px) rotateY(-28deg);z-index:9;animation-delay:.55s}
+.p2{left:23.5%;--tf:translateZ(40px) rotateY(-28deg);z-index:8;animation-delay:.7s;filter:brightness(1.08) contrast(1.03)}
 .p3{left:40%;--tf:translateZ(-60px) rotateY(-28deg);z-index:7;animation-delay:.85s;filter:brightness(.93)}
 .p4{left:58.5%;--tf:translateZ(-160px) rotateY(-28deg);z-index:6;animation-delay:1s;filter:brightness(.88)}
 .p5{left:77%;--tf:translateZ(-260px) rotateY(-28deg);z-index:5;animation-delay:1.15s;filter:brightness(.84)}
@@ -197,7 +197,7 @@ h1 small{
   .wordmark{font-size:clamp(58px,19vw,110px)}
   #hero .scroll-cue{display:none}
   .panel{width:38vw;bottom:37%}
-  .p1{left:-4%}.p2{left:16%}.p3{left:37%}.p4{left:58%}.p5{left:76%}
+  .p1{left:0%}.p2{left:17%}.p3{left:37%}.p4{left:58%}.p5{left:76%}
   .hero-bottom{flex-direction:column;align-items:flex-start;gap:20px}
 }
 @media (prefers-reduced-motion:reduce){
@@ -222,6 +222,14 @@ h1 small{
 }
 .scroll-cue::after{content:"";width:1px;height:56px;background:linear-gradient(180deg,var(--gold),transparent);animation:cue 2s ease-in-out infinite}
 @keyframes cue{0%{transform:scaleY(0);transform-origin:top}45%{transform:scaleY(1);transform-origin:top}55%{transform:scaleY(1);transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+/* ヒーロー：金の塵（カーソルからそっと避ける・極小/極少/極遅） */
+#hero-dust{position:absolute;inset:0;z-index:3;pointer-events:none}
+@media (prefers-reduced-motion:reduce){#hero-dust{display:none}}
+
+/* ヒーロー：建物の写真に触れると熱が残って光る金のグロー（マグマ演出の金版） */
+#hero-light{position:absolute;inset:0;z-index:3;pointer-events:none;mix-blend-mode:screen}
+@media (prefers-reduced-motion:reduce){#hero-light{display:none}}
 
 /* ---------- shared section ---------- */
 section{position:relative;padding:clamp(80px,12vh,140px) clamp(20px,6vw,90px)}
@@ -279,12 +287,18 @@ section{position:relative;padding:clamp(80px,12vh,140px) clamp(20px,6vw,90px)}
 .svc-row.rev .svc-img{order:2}
 .svc-row.rev .svc-txt{order:1}
 .svc-img{position:relative}
-.svc-img .ph{overflow:hidden;aspect-ratio:16/10;background:#0c0f14}
+.svc-img .ph{overflow:hidden;aspect-ratio:16/10;background:#0c0f14;position:relative;perspective:800px}
 .svc-img img{
   width:100%;height:100%;object-fit:cover;display:block;
   filter:saturate(.9) brightness(.94);transition:transform 1.2s cubic-bezier(.22,.8,.3,1);
 }
 .svc-row:hover .svc-img img{transform:scale(1.045)}
+.svc-img .ph::after{
+  content:"";position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .5s;
+  background:radial-gradient(circle at var(--mx,50%) var(--my,50%),rgba(255,255,255,.32),transparent 60%);
+  mix-blend-mode:overlay;
+}
+.svc-img .ph:hover::after{opacity:1}
 .svc-img .no{
   position:absolute;top:-32px;left:-12px;z-index:2;pointer-events:none;
   font-family:var(--en);font-size:clamp(60px,7vw,104px);font-weight:300;line-height:1;
@@ -313,12 +327,18 @@ section{position:relative;padding:clamp(80px,12vh,140px) clamp(20px,6vw,90px)}
 .ecolo-def .x{color:var(--muted);font-size:.7em}
 .works-mag{display:grid;grid-template-columns:repeat(12,1fr);gap:clamp(18px,2.4vw,34px);margin-top:60px}
 .wk{position:relative}
-.wk .ph{overflow:hidden;background:#0c0f14}
+.wk .ph{overflow:hidden;background:#0c0f14;position:relative;perspective:800px}
 .wk img{
   width:100%;height:100%;object-fit:cover;display:block;
   filter:saturate(.92) brightness(.95);transition:transform 1.2s cubic-bezier(.22,.8,.3,1);
 }
 .wk:hover img{transform:scale(1.05)}
+.wk .ph::after{
+  content:"";position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .5s;
+  background:radial-gradient(circle at var(--mx,50%) var(--my,50%),rgba(255,255,255,.32),transparent 60%);
+  mix-blend-mode:overlay;
+}
+.wk .ph:hover::after{opacity:1}
 .wk figcaption{display:flex;align-items:baseline;gap:14px;margin-top:16px;flex-wrap:wrap}
 .wk figcaption h3{font-family:var(--en);font-size:15px;letter-spacing:.24em;color:var(--gold-bright);font-weight:400}
 .wk figcaption .cat{font-size:11.5px;color:var(--muted);letter-spacing:.16em}
@@ -501,6 +521,8 @@ footer nav a:hover{color:var(--gold-bright)}
       <figure class="panel p5"><img src="img/panel_8.jpg" alt="木格子のモダンレジデンス"></figure>
     </div>
   </div>
+  <canvas id="hero-light" aria-hidden="true"></canvas>
+  <canvas id="hero-dust" aria-hidden="true"></canvas>
   <div class="hero-bottom">
     <h1>不動産は、<span class="gold">「保有」</span>から<span class="gold">「活用」</span>の時代へ。<small>綿密なマーケティングに基づく開発・再生・運用で、不動産のポテンシャルを最大化する。</small></h1>
     <div class="hero-ctas">
@@ -804,6 +826,224 @@ footer nav a:hover{color:var(--gold-bright)}
         vbg.style.transform = 'translateY(' + ((r.top + r.height/2 - window.innerHeight/2) * -0.12).toFixed(1) + 'px)';
       }
     }, {passive:true});
+  }
+
+  /* ヒーロー：金の塵（画面外で停止・reduced-motionで無効・タブ非表示でrAFが自然停止） */
+  var reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var dustCanvas = document.getElementById('hero-dust');
+  if(dustCanvas && hero && !reduceMotion){
+    var dctx = dustCanvas.getContext('2d');
+    var dust = [], dustRunning = false, dustRaf = null;
+    var dustMouse = {x:-9999, y:-9999};
+    var isFine = matchMedia('(pointer:fine)').matches;
+    var isSmall = matchMedia('(max-width:760px)').matches;
+    var count = isSmall ? 30 : 64;
+
+    function sizeDust(){
+      var dpr = Math.min(devicePixelRatio || 1, 2);
+      var w = hero.clientWidth, h = hero.clientHeight;
+      dustCanvas.width = w * dpr; dustCanvas.height = h * dpr;
+      dustCanvas.style.width = w + 'px'; dustCanvas.style.height = h + 'px';
+      dctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+    function seedDust(){
+      dust = [];
+      var w = hero.clientWidth, h = hero.clientHeight;
+      for(var i=0;i<count;i++){
+        dust.push({
+          x: Math.random()*w, y: Math.random()*h,
+          r: 1 + Math.random()*2.2,
+          vx: (Math.random()-0.5)*0.06, vy: -0.03 - Math.random()*0.05,
+          o: 0.25 + Math.random()*0.45
+        });
+      }
+    }
+    function stepDust(){
+      var w = hero.clientWidth, h = hero.clientHeight;
+      dctx.clearRect(0,0,w,h);
+      for(var i=0;i<dust.length;i++){
+        var p = dust[i];
+        if(isFine){
+          var dx = p.x - dustMouse.x, dy = p.y - dustMouse.y;
+          var d2 = dx*dx + dy*dy, rad = 150;
+          if(d2 < rad*rad){
+            var d = Math.sqrt(d2) || 1;
+            var f = (1 - d/rad) * 1.1;
+            p.x += (dx/d) * f; p.y += (dy/d) * f;
+          }
+        }
+        p.x += p.vx; p.y += p.vy;
+        if(p.y < -4){ p.y = h + 4; p.x = Math.random()*w; }
+        if(p.x < -4) p.x = w + 4; if(p.x > w + 4) p.x = -4;
+        dctx.beginPath();
+        dctx.shadowBlur = 6;
+        dctx.shadowColor = 'rgba(255,214,140,.9)';
+        dctx.fillStyle = 'rgba(255,224,166,' + p.o.toFixed(3) + ')';
+        dctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+        dctx.fill();
+      }
+      if(dustRunning) dustRaf = requestAnimationFrame(stepDust);
+    }
+    function startDust(){ if(dustRunning) return; dustRunning = true; stepDust(); }
+    function stopDust(){ dustRunning = false; if(dustRaf) cancelAnimationFrame(dustRaf); }
+
+    sizeDust(); seedDust();
+    window.addEventListener('resize', function(){ sizeDust(); }, {passive:true});
+    if(isFine){
+      hero.addEventListener('mousemove', function(e){
+        var r = hero.getBoundingClientRect();
+        dustMouse.x = e.clientX - r.left; dustMouse.y = e.clientY - r.top;
+      }, {passive:true});
+    }
+    new IntersectionObserver(function(entries){
+      entries.forEach(function(en){ en.isIntersecting ? startDust() : stopDust(); });
+    }, {threshold:0.05}).observe(hero);
+    document.addEventListener('visibilitychange', function(){
+      if(document.hidden) stopDust(); else if(hero.getBoundingClientRect().bottom > 0) startDust();
+    });
+  }
+
+  /* ヒーロー：建物の写真に触れると金の熱が残って光る（マグマ演出の金・実写版）
+     screen合成で下の実写パネルに重ねる＝写真そのものが「窓に灯りが点る」ように光る。
+     低解像度の熱バッファをピンポンで冷却しながら、クリックで衝撃波リングを飛ばす。 */
+  var lightCanvas = document.getElementById('hero-light');
+  if(lightCanvas && hero && !reduceMotion){
+    var lctx = lightCanvas.getContext('2d');
+    var BW = 200, BH = 120;
+    var bufA = document.createElement('canvas'); bufA.width = BW; bufA.height = BH;
+    var bufB = document.createElement('canvas'); bufB.width = BW; bufB.height = BH;
+    var curBuf = bufA, curCtx = bufA.getContext('2d');
+    var nextBuf = bufB, nextCtx = bufB.getContext('2d');
+    var isFineL = matchMedia('(pointer:fine)').matches;
+    var lm = {x:0.5, y:0.55, active:!isFineL};
+    var clicks = [];
+    var lightRunning = false, lightRaf = null;
+
+    function sizeLight(){
+      var dpr = Math.min(devicePixelRatio || 1, 2);
+      var w = hero.clientWidth, h = hero.clientHeight;
+      lightCanvas.width = w * dpr; lightCanvas.height = h * dpr;
+      lightCanvas.style.width = w + 'px'; lightCanvas.style.height = h + 'px';
+      lctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+    sizeLight();
+    window.addEventListener('resize', sizeLight, {passive:true});
+
+    if(isFineL){
+      hero.addEventListener('mousemove', function(e){
+        var r = hero.getBoundingClientRect();
+        lm.x = (e.clientX - r.left) / r.width; lm.y = (e.clientY - r.top) / r.height; lm.active = true;
+      }, {passive:true});
+      hero.addEventListener('mouseleave', function(){ lm.active = false; });
+    }
+    hero.addEventListener(isFineL ? 'click' : 'touchstart', function(e){
+      var r = hero.getBoundingClientRect();
+      var cx, cy;
+      if(e.touches && e.touches[0]){ cx = e.touches[0].clientX; cy = e.touches[0].clientY; }
+      else { cx = e.clientX; cy = e.clientY; }
+      clicks.push({x:(cx - r.left) / r.width, y:(cy - r.top) / r.height, t0: performance.now()});
+      if(clicks.length > 4) clicks.shift();
+    }, {passive:true});
+
+    function stepLight(ts){
+      /* 自動巡回（タッチ端末：カーソルの代わりにゆっくり熱点が周る） */
+      if(!isFineL){ lm.x = 0.5 + Math.sin(ts*0.00035)*0.36; lm.y = 0.5 + Math.cos(ts*0.00028)*0.18; }
+
+      nextCtx.clearRect(0,0,BW,BH);
+      nextCtx.globalAlpha = 0.965;
+      nextCtx.drawImage(curBuf,0,0);
+      nextCtx.globalAlpha = 1;
+      if(lm.active){
+        var gx = lm.x*BW, gy = lm.y*BH;
+        var g = nextCtx.createRadialGradient(gx,gy,0,gx,gy,BW*0.075);
+        g.addColorStop(0,'rgba(255,221,150,.95)');
+        g.addColorStop(1,'rgba(255,221,150,0)');
+        nextCtx.globalCompositeOperation = 'lighter';
+        nextCtx.fillStyle = g;
+        nextCtx.fillRect(0,0,BW,BH);
+        nextCtx.globalCompositeOperation = 'source-over';
+      }
+      var tb = curBuf, tc = curCtx; curBuf = nextBuf; curCtx = nextCtx; nextBuf = tb; nextCtx = tc;
+
+      var w = hero.clientWidth, h = hero.clientHeight;
+      lctx.clearRect(0,0,w,h);
+
+      /* 建物の写真の範囲だけに光を閉じ込める（暗闇へのはみ出しを防ぐ） */
+      var heroRect = hero.getBoundingClientRect();
+      var panelEls = hero.querySelectorAll('.panel');
+      lctx.save();
+      lctx.beginPath();
+      panelEls.forEach(function(pe){
+        var pr = pe.getBoundingClientRect();
+        lctx.rect(pr.left - heroRect.left, pr.top - heroRect.top, pr.width, pr.height);
+      });
+      lctx.clip();
+      lctx.drawImage(curBuf,0,0,w,h);
+      lctx.restore();
+
+      var now = performance.now();
+      clicks = clicks.filter(function(c){ return now - c.t0 < 900; });
+      lctx.save();
+      lctx.beginPath();
+      panelEls.forEach(function(pe){
+        var pr = pe.getBoundingClientRect();
+        lctx.rect(pr.left - heroRect.left, pr.top - heroRect.top, pr.width, pr.height);
+      });
+      lctx.clip();
+      clicks.forEach(function(c){
+        var t = (now - c.t0) / 900;
+        lctx.beginPath();
+        lctx.strokeStyle = 'rgba(255,224,160,' + ((1-t)*0.6).toFixed(3) + ')';
+        lctx.lineWidth = 2.5*(1-t) + 0.6;
+        lctx.arc(c.x*w, c.y*h, t*170, 0, Math.PI*2);
+        lctx.stroke();
+      });
+      lctx.restore();
+
+      if(lightRunning) lightRaf = requestAnimationFrame(stepLight);
+    }
+    function startLight(){ if(lightRunning) return; lightRunning = true; lightRaf = requestAnimationFrame(stepLight); }
+    function stopLight(){ lightRunning = false; if(lightRaf) cancelAnimationFrame(lightRaf); }
+    new IntersectionObserver(function(entries){
+      entries.forEach(function(en){ en.isIntersecting ? startLight() : stopLight(); });
+    }, {threshold:0.05}).observe(hero);
+    document.addEventListener('visibilitychange', function(){
+      if(document.hidden) stopLight(); else if(hero.getBoundingClientRect().bottom > 0) startLight();
+    });
+  }
+
+  /* 実写パネル（サービス/実績）：カーソル追従のチルト＋光沢。ポインタが細かい端末のみ */
+  if(matchMedia('(pointer:fine)').matches && !reduceMotion){
+    document.querySelectorAll('.svc-img .ph, .wk .ph').forEach(function(ph){
+      var img = ph.querySelector('img');
+      if(!img) return;
+      ph.addEventListener('mousemove', function(e){
+        var r = ph.getBoundingClientRect();
+        var px = (e.clientX - r.left) / r.width, py = (e.clientY - r.top) / r.height;
+        img.style.transition = 'transform .15s ease-out';
+        img.style.transform = 'scale(1.1) rotateX(' + ((0.5-py)*14).toFixed(2) + 'deg) rotateY(' + ((px-0.5)*14).toFixed(2) + 'deg)';
+        ph.style.setProperty('--mx', (px*100).toFixed(1) + '%');
+        ph.style.setProperty('--my', (py*100).toFixed(1) + '%');
+      }, {passive:true});
+      ph.addEventListener('mouseleave', function(){
+        img.style.transition = 'transform .7s cubic-bezier(.22,.8,.3,1)';
+        img.style.transform = '';
+      });
+    });
+  }
+
+  /* CTAボタン：カーソルにわずかに引き寄せられるマグネット追従 */
+  if(matchMedia('(pointer:fine)').matches && !reduceMotion){
+    document.querySelectorAll('.btn').forEach(function(btn){
+      btn.addEventListener('mousemove', function(e){
+        var r = btn.getBoundingClientRect();
+        var mx = e.clientX - (r.left + r.width/2), my = e.clientY - (r.top + r.height/2);
+        var tx = Math.max(-16, Math.min(16, mx*0.35));
+        var ty = Math.max(-12, Math.min(12, my*0.5));
+        btn.style.transform = 'translate(' + tx.toFixed(1) + 'px,' + ty.toFixed(1) + 'px) scale(1.04)';
+      }, {passive:true});
+      btn.addEventListener('mouseleave', function(){ btn.style.transform = ''; });
+    });
   }
 
   /* ============ UI ============ */
