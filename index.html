@@ -650,6 +650,26 @@ html,body{overflow-x:clip}
   .msg-layout{grid-template-columns:1fr}
   .msg-figure{max-width:300px;margin-top:6px}
 }
+
+/* ===== 代表メッセージ＝アイボリーの手紙（黒→アイボリー反転／写真なし／specs/01勝ち筋） ===== */
+#message{background:var(--paper);color:#1a1f28}
+#message .msg-letter{max-width:760px}
+#message .sec-label{color:#a67c1e}
+#message .sec-label::before{background:#c8a45d}
+#message .sec-title{color:#141922}
+#message .msg-quote{color:#181d26}
+#message .msg-quote .gold{color:#9c7420}
+#message .msg-body{max-width:720px}
+#message .msg-body p{color:#4c525b}
+#message .msg-sign{border-top-color:rgba(20,20,20,.16)}
+#message .msg-sign .role{color:#787e88}
+#message .msg-sign .name{color:#141922}
+#message .msg-sign .yomi{color:#a67c1e}
+#message .brand-watermark{opacity:.05}
+#message .brand-watermark svg{stroke:#141922}
+
+/* 選ばれる理由：番号を大きくグラフィック化 */
+.reasons .r .no{font-size:clamp(30px,3.2vw,42px);font-weight:300;letter-spacing:.02em;color:var(--gold);opacity:.9;display:block;margin-bottom:6px;line-height:1}
 </style>
 </head>
 <body>
@@ -907,30 +927,24 @@ html,body{overflow-x:clip}
 
 <!-- ================= MESSAGE（代表メッセージ） ================= -->
 <section id="message">
-  <div class="brand-watermark" style="right:-8%;top:6%;width:min(520px,56%)">
+  <div class="brand-watermark" style="right:-3%;top:12%;width:min(400px,42%)">
     <svg viewBox="0 0 100 100" aria-hidden="true"><path d="M50,3 L97,50 L50,97 L3,50 Z" fill="none" stroke-width="1"/><path d="M50,26 L74,50 L50,74 L26,50 Z" fill="none" stroke-width=".8"/></svg>
   </div>
   <div class="container">
     <p class="sec-label rv">Message</p>
     <h2 class="sec-title rv">代表メッセージ</h2>
-    <p class="msg-quote rv">不動産は、<span class="gold">「保有」</span>から<span class="gold">「活用」</span>の時代へ。<br>その価値を、最大限に引き出す。</p>
-    <div class="msg-layout">
-      <div>
-        <div class="msg-body rv">
-          <p>学生の頃に事業を興して以来、私はずっと「価値をつくる側」に立ってきました。不動産の権利調整・人材・不動産金融の現場で経験を積み、独立前には200億円規模の開発プロジェクトに携わってきました。そして2008年、株式会社Promotersを創業しました。</p>
-          <p>私たちは、広告的な営業をしません。18年間、ご紹介と口コミだけで事業を続けてこられたのは、目先の取引ではなく、お客様の資産と真剣に向き合ってきたからです。</p>
-          <p>売る・貸す・育てる——どの選択が最善かを、お客様と同じ目線で考え抜く。開発・再生・管理を自社で一気通貫できるからこそ、「売却ありき」ではない本当の最適解をご提案できます。大切な不動産のこと、まずはお気軽にご相談ください。</p>
-        </div>
-        <div class="msg-sign rv">
-          <span class="role">株式会社Promoters 代表</span>
-          <span class="name">林 明慶</span>
-          <span class="yomi">HAYASHI AKINORI</span>
-        </div>
+    <div class="msg-letter">
+      <p class="msg-quote rv">不動産は、<span class="gold">「保有」</span>から<span class="gold">「活用」</span>の時代へ。<br>その価値を、最大限に引き出す。</p>
+      <div class="msg-body rv">
+        <p>学生の頃に事業を興して以来、私はずっと「価値をつくる側」に立ってきました。不動産の権利調整・人材・不動産金融の現場で経験を積み、独立前には200億円規模の開発プロジェクトに携わってきました。そして2008年、株式会社Promotersを創業しました。</p>
+        <p>私たちは、広告的な営業をしません。18年間、ご紹介と口コミだけで事業を続けてこられたのは、目先の取引ではなく、お客様の資産と真剣に向き合ってきたからです。</p>
+        <p>売る・貸す・育てる——どの選択が最善かを、お客様と同じ目線で考え抜く。開発・再生・管理を自社で一気通貫できるからこそ、「売却ありき」ではない本当の最適解をご提案できます。大切な不動産のこと、まずはお気軽にご相談ください。</p>
       </div>
-      <figure class="msg-figure rv">
-        <div class="ph"><img src="img/panel_1.jpg" alt="銀座の街並み" loading="lazy"></div>
-        <figcaption>Ginza, Tokyo</figcaption>
-      </figure>
+      <div class="msg-sign rv">
+        <span class="role">株式会社Promoters 代表</span>
+        <span class="name">林 明慶</span>
+        <span class="yomi">HAYASHI AKINORI</span>
+      </div>
     </div>
   </div>
 </section>
