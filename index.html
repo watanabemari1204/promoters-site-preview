@@ -600,6 +600,56 @@ footer nav a:hover{color:var(--gold-bright)}
 #message .msg-sign .role{font-size:12.5px;color:var(--muted);letter-spacing:.16em}
 #message .msg-sign .name{font-family:var(--serif);font-weight:600;font-size:clamp(20px,2.2vw,26px);color:var(--paper);letter-spacing:.14em}
 #message .msg-sign .yomi{font-family:var(--en);font-size:12px;color:var(--gold);letter-spacing:.22em}
+
+/* ===== 2026-07-22 デザイン立て直し：モバイル改行修正・密度ダウン・グラフィック ===== */
+html,body{overflow-x:clip}
+
+/* 改行崩れ：見出しの強制brはモバイルで無効化（日本語は自然に折返す） */
+@media(max-width:760px){
+  h1 br, .sec-title br, .msg-quote br{display:none}
+}
+
+/* ボタンは語中で折れない・矢印が離れない（Hallmark gate49） */
+.btn{justify-content:center}
+.btn .arw{flex-shrink:0}
+@media(max-width:760px){
+  .hero-ctas{width:100%}
+  .hero-ctas .btn{width:100%}
+}
+
+/* ヒーロー：モバイルで eyebrow と wordmark が重ならない＋横はみ出し防止 */
+@media(max-width:760px){
+  .hero-eyebrow{top:76px;font-size:9px;letter-spacing:.26em;text-indent:.26em;max-width:92vw;overflow:hidden;text-overflow:ellipsis}
+  .wordmark{top:106px}
+  .hero-bottom{bottom:clamp(70px,10vh,90px)}
+}
+
+/* 可読性：本文グレーを一段明るく（"見にくい"対策） */
+.sec-lead{color:#c6ccd6}
+#reason .lead-def{color:#e2e6ec}
+.reasons .r p{color:#c2c8d3}
+#message .msg-body p{color:#ced4de}
+.faq-item .a{color:#c2c8d3}
+.stat .lbl{color:#b0b7c3}
+.ph-body{color:#c2c8d3}
+
+/* グラフィック：ブランドの菱形マークを大きな透かしに（文字の壁を割る） */
+#reason,#message{overflow:hidden}
+#reason .container,#message .container{position:relative;z-index:1}
+.brand-watermark{position:absolute;pointer-events:none;opacity:.06;z-index:0;line-height:0}
+.brand-watermark svg{display:block;width:100%;height:auto;stroke:var(--gold)}
+
+/* 代表メッセージ：写真を添えて文字の壁を割る（2カラム→モバイルは縦積み） */
+.msg-layout{display:grid;grid-template-columns:1fr minmax(0,300px);gap:clamp(28px,4vw,56px);align-items:start;margin-top:8px}
+.msg-figure{position:relative;margin:0}
+.msg-figure .ph{overflow:hidden;border:1px solid rgba(200,164,93,.22)}
+.msg-figure img{width:100%;aspect-ratio:3/4;object-fit:cover;display:block;filter:saturate(.92) brightness(.9);transition:transform 1.2s cubic-bezier(.22,.8,.3,1)}
+.msg-figure:hover img{transform:scale(1.04)}
+.msg-figure figcaption{margin-top:12px;font-family:var(--en);font-size:11px;letter-spacing:.28em;color:var(--gold);text-transform:uppercase}
+@media(max-width:820px){
+  .msg-layout{grid-template-columns:1fr}
+  .msg-figure{max-width:300px;margin-top:6px}
+}
 </style>
 </head>
 <body>
@@ -677,7 +727,7 @@ footer nav a:hover{color:var(--gold-bright)}
       <h1>不動産は、<span class="gold">「保有」</span>から<span class="gold">「活用」</span>の時代へ。<small>綿密なマーケティングに基づく開発・再生・運用で、不動産のポテンシャルを最大化する。</small></h1>
     </div>
     <div class="hero-ctas">
-      <a class="btn btn-gold" href="#contact">物件・土地について無料で相談する<span class="arw">→</span></a>
+      <a class="btn btn-gold" href="#contact">無料で相談する<span class="arw">→</span></a>
       <a class="btn btn-ghost" href="#partner">投資家・パートナーの方へ<span class="arw">→</span></a>
     </div>
   </div>
@@ -697,6 +747,9 @@ footer nav a:hover{color:var(--gold-bright)}
 
 <!-- ================= REASON（選ばれる理由） ================= -->
 <section id="reason">
+  <div class="brand-watermark" style="left:-10%;bottom:-8%;width:min(480px,52%)">
+    <svg viewBox="0 0 100 100" aria-hidden="true"><path d="M50,3 L97,50 L50,97 L3,50 Z" fill="none" stroke-width="1"/><path d="M50,26 L74,50 L50,74 L26,50 Z" fill="none" stroke-width=".8"/></svg>
+  </div>
   <div class="container">
     <p class="sec-label rv">Why Promoters</p>
     <h2 class="sec-title rv">なぜ、大切な不動産を<br>この会社に任せられるのか。</h2>
@@ -854,19 +907,30 @@ footer nav a:hover{color:var(--gold-bright)}
 
 <!-- ================= MESSAGE（代表メッセージ） ================= -->
 <section id="message">
+  <div class="brand-watermark" style="right:-8%;top:6%;width:min(520px,56%)">
+    <svg viewBox="0 0 100 100" aria-hidden="true"><path d="M50,3 L97,50 L50,97 L3,50 Z" fill="none" stroke-width="1"/><path d="M50,26 L74,50 L50,74 L26,50 Z" fill="none" stroke-width=".8"/></svg>
+  </div>
   <div class="container">
     <p class="sec-label rv">Message</p>
     <h2 class="sec-title rv">代表メッセージ</h2>
     <p class="msg-quote rv">不動産は、<span class="gold">「保有」</span>から<span class="gold">「活用」</span>の時代へ。<br>その価値を、最大限に引き出す。</p>
-    <div class="msg-body rv">
-      <p>学生の頃に事業を興して以来、私はずっと「価値をつくる側」に立ってきました。不動産の権利調整、人材、不動産金融——さまざまな現場で経験を積み、独立前には200億円規模の不動産開発プロジェクトに携わってきました。そして2008年、株式会社Promotersを創業しました。</p>
-      <p>私たちは、広告的な営業をしません。18年間、お客様からのご紹介と口コミだけで事業を続けてこられたのは、目先の取引ではなく、お客様の資産と真剣に向き合ってきたからだと考えています。</p>
-      <p>売る・貸す・育てる——どの選択が最善かを、お客様と同じ目線で考え抜く。開発・再生・管理を自社で一気通貫できる私たちだからこそ、「売却ありき」ではない本当の最適解をご提案できます。大切な不動産のこと、まずはお気軽にご相談ください。</p>
-    </div>
-    <div class="msg-sign rv">
-      <span class="role">株式会社Promoters 代表</span>
-      <span class="name">林 明慶</span>
-      <span class="yomi">HAYASHI AKIYOSHI</span>
+    <div class="msg-layout">
+      <div>
+        <div class="msg-body rv">
+          <p>学生の頃に事業を興して以来、私はずっと「価値をつくる側」に立ってきました。不動産の権利調整・人材・不動産金融の現場で経験を積み、独立前には200億円規模の開発プロジェクトに携わってきました。そして2008年、株式会社Promotersを創業しました。</p>
+          <p>私たちは、広告的な営業をしません。18年間、ご紹介と口コミだけで事業を続けてこられたのは、目先の取引ではなく、お客様の資産と真剣に向き合ってきたからです。</p>
+          <p>売る・貸す・育てる——どの選択が最善かを、お客様と同じ目線で考え抜く。開発・再生・管理を自社で一気通貫できるからこそ、「売却ありき」ではない本当の最適解をご提案できます。大切な不動産のこと、まずはお気軽にご相談ください。</p>
+        </div>
+        <div class="msg-sign rv">
+          <span class="role">株式会社Promoters 代表</span>
+          <span class="name">林 明慶</span>
+          <span class="yomi">HAYASHI AKIYOSHI</span>
+        </div>
+      </div>
+      <figure class="msg-figure rv">
+        <div class="ph"><img src="img/panel_1.jpg" alt="銀座の街並み" loading="lazy"></div>
+        <figcaption>Ginza, Tokyo</figcaption>
+      </figure>
     </div>
   </div>
 </section>
