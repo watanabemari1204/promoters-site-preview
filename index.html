@@ -1124,76 +1124,38 @@ html,body{overflow-x:clip}
   <a class="f-form" href="#contact">無料相談はこちら</a>
 </div>
 
+<!-- GSAP + ScrollTrigger（自己ホスト＝CSP script-src 'self' で許可。CDN不可のため） -->
+<script src="js/gsap.min.js"></script>
+<script src="js/ScrollTrigger.min.js"></script>
 <script>
 /* ============================================================
-   PROMOTERS — Hero parallax & UI
-   Built with Claude Fable 5
+   PROMOTERS — Hero (GSAP ScrollTrigger + scrub) & UI
    ============================================================ */
 (function(){
   function easeOutCubic(t){ return 1 - Math.pow(1-t, 3); }
 
-  /* ヒーロー：Apple製品ページ式スクロール振り付け（kemu_ai式・スクロール%を数字で管理）。
-     hero=stage(sticky 100vh・dust/light/tiltの基準)、heroTrack=340vhのスクロール軌道。
-     平面写真なのでrotateYはしない（偽3D＝ポリゴン臭を封印）。 */
+  /* ヒーロー：GSAP ScrollTrigger + scrub でApple級のヌルヌル同期（kemu_ai手順1）。
+     pinはsticky(#hero-stage)が担当＝ScrollTriggerはscrubのみ。scrub:1のlerpで滑らか。
+     dust/light/tiltが使う var hero は stage を指す（canvasサイズ=100vh）。 */
   var hero = document.getElementById('hero-stage');
-  var heroTrack = document.getElementById('hero');
-  var heroModelImg = document.querySelector('#hero-model img');
-  var wm = document.querySelector('.wordmark');
-  var eyebrow = document.querySelector('.hero-eyebrow');
-  var heroBottom = document.querySelector('.hero-bottom');
-  var scrollCue = document.querySelector('#hero .scroll-cue');
-  var specEls = Array.prototype.slice.call(document.querySelectorAll('.hero-specs li'));
   var heroReduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var heroFine = matchMedia('(pointer:fine)').matches;
-  var heroChoreo = !!(hero && heroTrack) && window.innerWidth > 760 && !heroReduce;
-  var hmx = 0, hmcur = 0;
-  function _cl01(x){ return x<0?0:x>1?1:x; }
-  function _seg(sp,a,b){ return _cl01((sp-a)/(b-a)); }
-  function _lerp(a,b,t){ return a+(b-a)*t; }
-  if(hero && heroFine && !heroReduce){
-    hero.addEventListener('mousemove', function(e){ hmx = e.clientX / window.innerWidth - 0.5; }, {passive:true});
-  }
-  if(heroChoreo){
-    (function heroLoop(){
-      hmcur += (hmx - hmcur) * 0.07;
-      var range = heroTrack.offsetHeight - hero.clientHeight;
-      var sp = range > 0 ? _cl01(window.scrollY / range) : 0;
-      /* ①0-58%：模型が小さく中央→拡大して全画面 ②以降わずかに寄る */
-      var grow = easeOutCubic(_seg(sp,0,0.58));
-      var scale = _lerp(0.66, 1.0, grow) + _seg(sp,0.58,1)*0.06;
-      if(heroModelImg){
-        heroModelImg.style.transform = 'scale(' + scale.toFixed(4) + ') translate(' + (hmcur*-12).toFixed(1) + 'px,' + _lerp(24,0,grow).toFixed(1) + 'px)';
-      }
-      /* wordmark：ロードはwordInで登場→拡大に合わせ上へ泳ぎフェード */
-      if(wm){
-        wm.style.transform = 'translate(' + (hmcur*-24).toFixed(1) + 'px,' + (sp*-72).toFixed(1) + 'px)';
-        wm.style.opacity = sp > 0.02 ? (1 - _seg(sp,0.5,0.72)).toFixed(3) : '';
-      }
-      if(eyebrow){ eyebrow.style.opacity = sp > 0.02 ? (1 - _seg(sp,0.4,0.62)).toFixed(3) : ''; }
-      /* ④行送りでスペック出現（右） */
-      for(var i=0;i<specEls.length;i++){
-        if(sp > 0.5 + i*0.07) specEls[i].classList.add('on'); else specEls[i].classList.remove('on');
-      }
-      /* ⑤締め：H1＋CTAがせり上がって出る */
-      if(heroBottom){
-        var bp = easeOutCubic(_seg(sp,0.74,0.94));
-        heroBottom.style.opacity = bp.toFixed(3);
-        heroBottom.style.transform = 'translateY(' + _lerp(30,0,bp).toFixed(1) + 'px)';
-      }
-      if(scrollCue){ scrollCue.style.opacity = (1 - _seg(sp,0.02,0.16)).toFixed(3); }
-      requestAnimationFrame(heroLoop);
-    })();
+  if(window.gsap && window.ScrollTrigger && window.innerWidth > 760 && !heroReduce && document.getElementById('hero-model')){
+    gsap.registerPlugin(ScrollTrigger);
+    var htl = gsap.timeline({ scrollTrigger:{ trigger:'#hero', start:'top top', end:'bottom bottom', scrub:1 } });
+    /* ①模型が小さく中央→拡大して全画面 */
+    htl.fromTo('#hero-model img', {scale:0.66, yPercent:3}, {scale:1.0, yPercent:0, ease:'power2.out', duration:0.58}, 0)
+       .to('#hero-model img', {scale:1.06, ease:'none', duration:0.42}, 0.58)
+       /* ②eyebrow/wordmarkが拡大に合わせ上へ泳いでフェード */
+       .to('.hero-eyebrow', {opacity:0, ease:'none', duration:0.22}, 0.4)
+       .to('.wordmark', {yPercent:-42, opacity:0, ease:'none', duration:0.24}, 0.5)
+       /* ③右にスペックが1行ずつ出現 */
+       .fromTo('.hero-specs li', {opacity:0, x:28}, {opacity:1, x:0, ease:'power2.out', stagger:0.07, duration:0.14}, 0.5)
+       /* ④H1＋CTAで締め */
+       .fromTo('.hero-bottom', {opacity:0, y:30}, {opacity:1, y:0, ease:'power2.out', duration:0.18}, 0.76)
+       .to('#hero .scroll-cue', {opacity:0, ease:'none', duration:0.1}, 0.02);
   } else {
-    /* モバイル/reduced-motion：静的（全部見える）＋fineならマウス微パララックスのみ */
-    if(heroBottom){ heroBottom.style.opacity = '1'; }
-    if(hero && heroFine && !heroReduce){
-      (function mobLoop(){
-        hmcur += (hmx - hmcur) * 0.06;
-        if(heroModelImg) heroModelImg.style.transform = 'scale(1.02) translateX(' + (hmcur*-10).toFixed(1) + 'px)';
-        if(wm) wm.style.transform = 'translateX(' + (hmcur*-18).toFixed(1) + 'px)';
-        requestAnimationFrame(mobLoop);
-      })();
-    }
+    /* モバイル/reduced-motion/GSAP未ロード：静的に全部見える状態へ（CTAが隠れたままを防ぐ） */
+    var _hb = document.querySelector('.hero-bottom'); if(_hb) _hb.style.opacity = '1';
   }
 
   /* ビジョンバンドの背景視差 */
