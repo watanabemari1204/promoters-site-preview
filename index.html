@@ -201,44 +201,33 @@ body.menu-open #mobile-menu{opacity:1;visibility:visible}
 #hero::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
   background:radial-gradient(ellipse 70% 45% at 50% 28%,rgba(200,164,93,.07),transparent 65%)}
 #hero::after{content:"";position:absolute;inset:0;z-index:4;pointer-events:none;
-  background:linear-gradient(180deg,rgba(6,7,9,.35) 0%,transparent 26%,transparent 60%,rgba(6,7,9,.92) 100%)}
+  background:linear-gradient(180deg,transparent 58%,rgba(6,7,9,.72) 100%)}
 .hero-eyebrow{
-  position:absolute;top:clamp(84px,12vh,130px);left:50%;transform:translateX(-50%);z-index:1;
+  position:absolute;top:clamp(84px,12vh,130px);left:50%;transform:translateX(-50%);z-index:2;
   font-family:var(--en);font-size:clamp(10px,1.1vw,13px);letter-spacing:.55em;text-indent:.55em;
   color:var(--gold);white-space:nowrap;animation:eyebrowIn 1.4s .2s both;
 }
 @keyframes eyebrowIn{from{opacity:0;transform:translate(-50%,-12px)}to{opacity:1;transform:translate(-50%,0)}}
 .wordmark{
-  position:absolute;top:clamp(88px,12vh,126px);left:0;right:0;z-index:1;text-align:center;
+  position:absolute;top:clamp(88px,12vh,126px);left:0;right:0;z-index:2;text-align:center;
   font-family:var(--en);font-weight:300;color:var(--paper);
   font-size:clamp(64px,11.5vw,180px);line-height:1;letter-spacing:-.01em;
   animation:wordIn 1.8s .4s both;will-change:transform;
 }
 @keyframes wordIn{from{opacity:0;letter-spacing:.08em;filter:blur(8px)}to{opacity:1;letter-spacing:-.01em;filter:blur(0)}}
-.stage{position:absolute;inset:0;z-index:2;perspective:1500px;perspective-origin:50% 40%}
-.shelf{
-  position:absolute;left:calc(50% - min(720px,50%));top:0;
-  width:min(1440px,100%);height:100%;
-  transform-style:preserve-3d;will-change:transform;
-}
-.panel{
-  position:absolute;bottom:21%;width:clamp(150px,19vw,300px);aspect-ratio:3/4;
-  border:1px solid rgba(200,164,93,.22);background:#0c0f14;
-  box-shadow:0 40px 80px rgba(0,0,0,.65);
-  transform:var(--tf);
-  -webkit-box-reflect:below 10px linear-gradient(transparent 55%,rgba(255,255,255,.13));
-  animation:panelIn 1.3s cubic-bezier(.22,.8,.3,1) both;
-}
-.panel img{width:100%;height:100%;object-fit:cover;display:block}
-@keyframes panelIn{from{opacity:0;transform:var(--tf) translateY(90px)}to{opacity:1;transform:var(--tf) translateY(0)}}
-.p1{left:9%;--tf:translateZ(140px) rotateY(-28deg);z-index:9;animation-delay:.55s}
-.p2{left:23.5%;--tf:translateZ(40px) rotateY(-28deg);z-index:8;animation-delay:.7s;filter:brightness(1.08) contrast(1.03)}
-.p3{left:40%;--tf:translateZ(-60px) rotateY(-28deg);z-index:7;animation-delay:.85s;filter:brightness(.93)}
-.p4{left:58.5%;--tf:translateZ(-160px) rotateY(-28deg);z-index:6;animation-delay:1s;filter:brightness(.88)}
-.p5{left:77%;--tf:translateZ(-260px) rotateY(-28deg);z-index:5;animation-delay:1.15s;filter:brightness(.84)}
+/* 建築模型を全面bleed（1枚絵・スクロールで押し込み＝Apple製品ページ式の生成演出） */
+.hero-model{position:absolute;inset:0;z-index:1;overflow:hidden;transform-origin:50% 44%;
+  animation:heroModelIn 2.1s cubic-bezier(.19,1,.22,1) both}
+.hero-model img{width:100%;height:100%;object-fit:cover;object-position:center 40%;display:block;will-change:transform}
+@keyframes heroModelIn{from{opacity:0;transform:scale(1.14)}to{opacity:1;transform:scale(1)}}
+/* 模型の上・下・左を沈めて、巨大serifと左下テキストを常に黒地に載せる（wordmarkより背面） */
+.hero-model::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:
+    linear-gradient(180deg,rgba(6,7,9,.5) 0%,rgba(6,7,9,.1) 20%,transparent 45%,rgba(6,7,9,.5) 70%,rgba(6,7,9,.96) 100%),
+    linear-gradient(90deg,rgba(6,7,9,.55) 0%,transparent 42%)}
 .hero-bottom{
   position:absolute;left:clamp(20px,6vw,90px);right:clamp(20px,6vw,90px);bottom:clamp(46px,8vh,90px);
-  z-index:5;display:flex;justify-content:space-between;align-items:flex-end;gap:26px;flex-wrap:wrap;
+  z-index:5;display:flex;flex-direction:column;align-items:flex-start;gap:22px;max-width:min(640px,86vw);
   animation:riseIn 1.2s 1.5s both;
 }
 @keyframes riseIn{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
@@ -256,12 +245,10 @@ h1 small{
 @media (max-width:760px){
   .wordmark{font-size:clamp(58px,19vw,110px)}
   #hero .scroll-cue{display:none}
-  .panel{width:38vw;bottom:37%}
-  .p1{left:0%}.p2{left:17%}.p3{left:37%}.p4{left:58%}.p5{left:76%}
-  .hero-bottom{flex-direction:column;align-items:flex-start;gap:20px}
+  .hero-model img{object-position:center 42%}
 }
 @media (prefers-reduced-motion:reduce){
-  .hero-eyebrow,.wordmark,.panel,.hero-bottom{animation:none}
+  .hero-eyebrow,.wordmark,.hero-model,.hero-bottom{animation:none}
 }
 
 .btn{
@@ -730,14 +717,8 @@ html,body{overflow-x:clip}
 <section id="hero">
   <p class="hero-eyebrow">株式会社Promoters — GINZA, TOKYO</p>
   <div class="wordmark">Promoters</div>
-  <div class="stage">
-    <div class="shelf" id="shelf">
-      <figure class="panel p1"><img src="img/panel_1.jpg" alt="銀座の商業建築"></figure>
-      <figure class="panel p2"><img src="img/panel_2.jpg" alt="都心の高層タワー"></figure>
-      <figure class="panel p3"><img src="img/panel_3.jpg" alt="黄昏の東京タワーと街並み"></figure>
-      <figure class="panel p4"><img src="img/panel_6.jpg" alt="ガラスカーテンウォールのオフィスビル"></figure>
-      <figure class="panel p5"><img src="img/panel_8.jpg" alt="木格子のモダンレジデンス"></figure>
-    </div>
+  <div class="hero-model" id="hero-model">
+    <img src="img/hero_model.jpg" alt="Promotersが手がける建築（スケールモデル）">
   </div>
   <canvas id="hero-light" aria-hidden="true"></canvas>
   <canvas id="hero-dust" aria-hidden="true"></canvas>
@@ -1127,20 +1108,31 @@ html,body{overflow-x:clip}
 (function(){
   function easeOutCubic(t){ return 1 - Math.pow(1-t, 3); }
 
-  /* ヒーロー：マウスに合わせて実写パネルの棚がわずかに回るパララックス */
+  /* ヒーロー：建築模型のマウス微パララックス＋スクロール押し込み（Apple製品ページ式）。
+     平面写真なのでrotateYはしない（偽3D＝ポリゴン臭を封印）。scrollで模型が押し込まれ型が上へ泳いで消える。 */
   var hero = document.getElementById('hero');
-  var shelf = document.getElementById('shelf');
+  var heroModelImg = document.querySelector('#hero-model img');
   var wm = document.querySelector('.wordmark');
-  if(hero && shelf && matchMedia('(pointer:fine)').matches){
-    var target = 0, cur = 0;
+  var heroReduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var heroFine = matchMedia('(pointer:fine)').matches;
+  var hmx = 0, hmcur = 0;
+  if(hero && heroFine && !heroReduce){
     hero.addEventListener('mousemove', function(e){
-      target = e.clientX / window.innerWidth - 0.5;
+      hmx = e.clientX / window.innerWidth - 0.5;
     }, {passive:true});
-    (function loop(){
-      cur += (target - cur) * 0.06;
-      shelf.style.transform = 'rotateY(' + (cur * 5).toFixed(3) + 'deg) translateX(' + (cur * -22).toFixed(1) + 'px)';
-      wm.style.transform = 'translateX(' + (cur * -28).toFixed(1) + 'px)';
-      requestAnimationFrame(loop);
+  }
+  if(hero && !heroReduce){
+    (function heroLoop(){
+      hmcur += (hmx - hmcur) * 0.06;
+      var sp = Math.min(Math.max(window.scrollY / hero.offsetHeight, 0), 1);
+      if(heroModelImg){
+        heroModelImg.style.transform = 'scale(' + (1 + sp*0.16).toFixed(4) + ') translate(' + (hmcur*-14).toFixed(1) + 'px,' + (sp*-24).toFixed(1) + 'px)';
+      }
+      if(wm){
+        wm.style.transform = 'translate(' + (hmcur*-26).toFixed(1) + 'px,' + (sp*-72).toFixed(1) + 'px)';
+        wm.style.opacity = sp > 0.02 ? (1 - sp*0.9).toFixed(3) : '';
+      }
+      requestAnimationFrame(heroLoop);
     })();
   }
 
@@ -1296,37 +1288,9 @@ html,body{overflow-x:clip}
       var w = hero.clientWidth, h = hero.clientHeight;
       lctx.clearRect(0,0,w,h);
 
-      /* 建物の写真の範囲だけに光を閉じ込める（暗闇へのはみ出しを防ぐ） */
-      var heroRect = hero.getBoundingClientRect();
-      var panelEls = hero.querySelectorAll('.panel');
-      lctx.save();
-      lctx.beginPath();
-      panelEls.forEach(function(pe){
-        var pr = pe.getBoundingClientRect();
-        lctx.rect(pr.left - heroRect.left, pr.top - heroRect.top, pr.width, pr.height);
-      });
-      lctx.clip();
+      /* 模型（全面bleed）に金の熱を乗せる。全面なのでクリップ不要。
+         クリック衝撃波リングは撤去（agent助言：CTA近傍のギミックは邪魔）。 */
       lctx.drawImage(curBuf,0,0,w,h);
-      lctx.restore();
-
-      var now = performance.now();
-      clicks = clicks.filter(function(c){ return now - c.t0 < 900; });
-      lctx.save();
-      lctx.beginPath();
-      panelEls.forEach(function(pe){
-        var pr = pe.getBoundingClientRect();
-        lctx.rect(pr.left - heroRect.left, pr.top - heroRect.top, pr.width, pr.height);
-      });
-      lctx.clip();
-      clicks.forEach(function(c){
-        var t = (now - c.t0) / 900;
-        lctx.beginPath();
-        lctx.strokeStyle = 'rgba(255,224,160,' + ((1-t)*0.6).toFixed(3) + ')';
-        lctx.lineWidth = 2.5*(1-t) + 0.6;
-        lctx.arc(c.x*w, c.y*h, t*170, 0, Math.PI*2);
-        lctx.stroke();
-      });
-      lctx.restore();
 
       if(lightRunning) lightRaf = requestAnimationFrame(stepLight);
     }
