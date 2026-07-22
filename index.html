@@ -197,10 +197,11 @@ body.menu-open #mobile-menu{opacity:1;visibility:visible}
 #mobile-menu .tel{color:var(--gold);font-size:24px;letter-spacing:.1em}
 
 /* ---------- hero（Foliom型：実写パネル×巨大セリフ） ---------- */
-#hero{position:relative;height:100svh;min-height:700px;overflow:hidden;background:#060709}
-#hero::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+#hero{position:relative;height:340vh;background:#060709}
+#hero-stage{position:sticky;top:0;height:100svh;min-height:640px;overflow:hidden;background:#060709}
+#hero-stage::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
   background:radial-gradient(ellipse 70% 45% at 50% 28%,rgba(200,164,93,.07),transparent 65%)}
-#hero::after{content:"";position:absolute;inset:0;z-index:4;pointer-events:none;
+#hero-stage::after{content:"";position:absolute;inset:0;z-index:4;pointer-events:none;
   background:linear-gradient(180deg,transparent 58%,rgba(6,7,9,.72) 100%)}
 .hero-eyebrow{
   position:absolute;top:clamp(84px,12vh,130px);left:50%;transform:translateX(-50%);z-index:2;
@@ -216,10 +217,18 @@ body.menu-open #mobile-menu{opacity:1;visibility:visible}
 }
 @keyframes wordIn{from{opacity:0;letter-spacing:.08em;filter:blur(8px)}to{opacity:1;letter-spacing:-.01em;filter:blur(0)}}
 /* 建築模型を全面bleed（1枚絵・スクロールで押し込み＝Apple製品ページ式の生成演出） */
-.hero-model{position:absolute;inset:0;z-index:1;overflow:hidden;transform-origin:50% 44%;
-  animation:heroModelIn 2.1s cubic-bezier(.19,1,.22,1) both}
-.hero-model img{width:100%;height:100%;object-fit:cover;object-position:center 40%;display:block;will-change:transform}
-@keyframes heroModelIn{from{opacity:0;transform:scale(1.14)}to{opacity:1;transform:scale(1)}}
+.hero-model{position:absolute;inset:0;z-index:1;overflow:hidden;animation:heroFade 1.6s .1s ease both}
+@keyframes heroFade{from{opacity:0}to{opacity:1}}
+.hero-model img{width:100%;height:100%;object-fit:cover;object-position:center 40%;display:block;
+  transform-origin:50% 48%;will-change:transform,opacity}
+/* スクロール振り付け用スペック（右・行送りで出現） */
+.hero-specs{position:absolute;right:clamp(28px,7vw,110px);top:50%;transform:translateY(-50%);z-index:5;
+  margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:clamp(16px,2.4vh,26px);text-align:right}
+.hero-specs li{font-family:var(--serif);font-weight:600;font-size:clamp(17px,2vw,26px);color:var(--paper);
+  letter-spacing:.14em;text-shadow:0 2px 22px rgba(0,0,0,.85);
+  opacity:0;transform:translateX(26px);transition:opacity .6s ease,transform .7s cubic-bezier(.22,.8,.3,1)}
+.hero-specs li.on{opacity:1;transform:none}
+.hero-specs li .n{display:block;font-family:var(--en);font-size:11px;letter-spacing:.32em;color:var(--gold);margin-bottom:5px}
 /* 模型の上・下・左を沈めて、巨大serifと左下テキストを常に黒地に載せる（wordmarkより背面） */
 .hero-model::after{content:"";position:absolute;inset:0;pointer-events:none;
   background:
@@ -228,7 +237,7 @@ body.menu-open #mobile-menu{opacity:1;visibility:visible}
 .hero-bottom{
   position:absolute;left:clamp(20px,6vw,90px);right:clamp(20px,6vw,90px);bottom:clamp(46px,8vh,90px);
   z-index:5;display:flex;flex-direction:column;align-items:flex-start;gap:22px;max-width:min(640px,86vw);
-  animation:riseIn 1.2s 1.5s both;
+  opacity:0;
 }
 @keyframes riseIn{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
 h1{
@@ -243,12 +252,20 @@ h1 small{
 }
 .hero-ctas{display:flex;gap:14px;flex-wrap:wrap}
 @media (max-width:760px){
+  #hero{height:100svh}
+  #hero-stage{position:relative;height:100svh}
+  .hero-bottom{opacity:1}
+  .hero-specs{display:none}
   .wordmark{font-size:clamp(58px,19vw,110px)}
   #hero .scroll-cue{display:none}
   .hero-model img{object-position:center 42%}
 }
 @media (prefers-reduced-motion:reduce){
   .hero-eyebrow,.wordmark,.hero-model,.hero-bottom{animation:none}
+  #hero{height:100svh}
+  #hero-stage{position:relative;height:100svh}
+  .hero-bottom{opacity:1}
+  .hero-specs{display:none}
 }
 
 .btn{
@@ -715,24 +732,31 @@ html,body{overflow-x:clip}
 
 <!-- ================= HERO ================= -->
 <section id="hero">
-  <p class="hero-eyebrow">株式会社Promoters — GINZA, TOKYO</p>
-  <div class="wordmark">Promoters</div>
-  <div class="hero-model" id="hero-model">
-    <img src="img/hero_model.jpg" alt="Promotersが手がける建築（スケールモデル）">
-  </div>
-  <canvas id="hero-light" aria-hidden="true"></canvas>
-  <canvas id="hero-dust" aria-hidden="true"></canvas>
-  <div class="hero-bottom">
-    <div class="hero-lead">
-      <p class="hero-trust">営業をしない会社。18年、ご紹介だけで。</p>
-      <h1>不動産は、<span class="gold">「保有」</span>から<span class="gold">「活用」</span>の時代へ。<small>綿密なマーケティングに基づく開発・再生・運用で、不動産のポテンシャルを最大化する。</small></h1>
+  <div id="hero-stage">
+    <div class="hero-model" id="hero-model">
+      <img src="img/hero_model.jpg" alt="Promotersが手がける建築（スケールモデル）">
     </div>
-    <div class="hero-ctas">
-      <a class="btn btn-gold" href="#contact">無料で相談する<span class="arw">→</span></a>
-      <a class="btn btn-ghost" href="#partner">投資家・パートナーの方へ<span class="arw">→</span></a>
+    <p class="hero-eyebrow">株式会社Promoters — GINZA, TOKYO</p>
+    <div class="wordmark">Promoters</div>
+    <canvas id="hero-light" aria-hidden="true"></canvas>
+    <canvas id="hero-dust" aria-hidden="true"></canvas>
+    <ul class="hero-specs" id="hero-specs" aria-hidden="true">
+      <li><span class="n">01</span>不動産開発</li>
+      <li><span class="n">02</span>不動産再生</li>
+      <li><span class="n">03</span>賃貸管理</li>
+    </ul>
+    <div class="hero-bottom">
+      <div class="hero-lead">
+        <p class="hero-trust">営業をしない会社。18年、ご紹介だけで。</p>
+        <h1>不動産は、<span class="gold">「保有」</span>から<span class="gold">「活用」</span>の時代へ。<small>綿密なマーケティングに基づく開発・再生・運用で、不動産のポテンシャルを最大化する。</small></h1>
+      </div>
+      <div class="hero-ctas">
+        <a class="btn btn-gold" href="#contact">無料で相談する<span class="arw">→</span></a>
+        <a class="btn btn-ghost" href="#partner">投資家・パートナーの方へ<span class="arw">→</span></a>
+      </div>
     </div>
+    <div class="scroll-cue">SCROLL</div>
   </div>
-  <div class="scroll-cue">SCROLL</div>
 </section>
 
 <!-- ================= STATS ================= -->
@@ -1108,32 +1132,68 @@ html,body{overflow-x:clip}
 (function(){
   function easeOutCubic(t){ return 1 - Math.pow(1-t, 3); }
 
-  /* ヒーロー：建築模型のマウス微パララックス＋スクロール押し込み（Apple製品ページ式）。
-     平面写真なのでrotateYはしない（偽3D＝ポリゴン臭を封印）。scrollで模型が押し込まれ型が上へ泳いで消える。 */
-  var hero = document.getElementById('hero');
+  /* ヒーロー：Apple製品ページ式スクロール振り付け（kemu_ai式・スクロール%を数字で管理）。
+     hero=stage(sticky 100vh・dust/light/tiltの基準)、heroTrack=340vhのスクロール軌道。
+     平面写真なのでrotateYはしない（偽3D＝ポリゴン臭を封印）。 */
+  var hero = document.getElementById('hero-stage');
+  var heroTrack = document.getElementById('hero');
   var heroModelImg = document.querySelector('#hero-model img');
   var wm = document.querySelector('.wordmark');
+  var eyebrow = document.querySelector('.hero-eyebrow');
+  var heroBottom = document.querySelector('.hero-bottom');
+  var scrollCue = document.querySelector('#hero .scroll-cue');
+  var specEls = Array.prototype.slice.call(document.querySelectorAll('.hero-specs li'));
   var heroReduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   var heroFine = matchMedia('(pointer:fine)').matches;
+  var heroChoreo = !!(hero && heroTrack) && window.innerWidth > 760 && !heroReduce;
   var hmx = 0, hmcur = 0;
+  function _cl01(x){ return x<0?0:x>1?1:x; }
+  function _seg(sp,a,b){ return _cl01((sp-a)/(b-a)); }
+  function _lerp(a,b,t){ return a+(b-a)*t; }
   if(hero && heroFine && !heroReduce){
-    hero.addEventListener('mousemove', function(e){
-      hmx = e.clientX / window.innerWidth - 0.5;
-    }, {passive:true});
+    hero.addEventListener('mousemove', function(e){ hmx = e.clientX / window.innerWidth - 0.5; }, {passive:true});
   }
-  if(hero && !heroReduce){
+  if(heroChoreo){
     (function heroLoop(){
-      hmcur += (hmx - hmcur) * 0.06;
-      var sp = Math.min(Math.max(window.scrollY / hero.offsetHeight, 0), 1);
+      hmcur += (hmx - hmcur) * 0.07;
+      var range = heroTrack.offsetHeight - hero.clientHeight;
+      var sp = range > 0 ? _cl01(window.scrollY / range) : 0;
+      /* ①0-58%：模型が小さく中央→拡大して全画面 ②以降わずかに寄る */
+      var grow = easeOutCubic(_seg(sp,0,0.58));
+      var scale = _lerp(0.66, 1.0, grow) + _seg(sp,0.58,1)*0.06;
       if(heroModelImg){
-        heroModelImg.style.transform = 'scale(' + (1 + sp*0.16).toFixed(4) + ') translate(' + (hmcur*-14).toFixed(1) + 'px,' + (sp*-24).toFixed(1) + 'px)';
+        heroModelImg.style.transform = 'scale(' + scale.toFixed(4) + ') translate(' + (hmcur*-12).toFixed(1) + 'px,' + _lerp(24,0,grow).toFixed(1) + 'px)';
       }
+      /* wordmark：ロードはwordInで登場→拡大に合わせ上へ泳ぎフェード */
       if(wm){
-        wm.style.transform = 'translate(' + (hmcur*-26).toFixed(1) + 'px,' + (sp*-72).toFixed(1) + 'px)';
-        wm.style.opacity = sp > 0.02 ? (1 - sp*0.9).toFixed(3) : '';
+        wm.style.transform = 'translate(' + (hmcur*-24).toFixed(1) + 'px,' + (sp*-72).toFixed(1) + 'px)';
+        wm.style.opacity = sp > 0.02 ? (1 - _seg(sp,0.5,0.72)).toFixed(3) : '';
       }
+      if(eyebrow){ eyebrow.style.opacity = sp > 0.02 ? (1 - _seg(sp,0.4,0.62)).toFixed(3) : ''; }
+      /* ④行送りでスペック出現（右） */
+      for(var i=0;i<specEls.length;i++){
+        if(sp > 0.5 + i*0.07) specEls[i].classList.add('on'); else specEls[i].classList.remove('on');
+      }
+      /* ⑤締め：H1＋CTAがせり上がって出る */
+      if(heroBottom){
+        var bp = easeOutCubic(_seg(sp,0.74,0.94));
+        heroBottom.style.opacity = bp.toFixed(3);
+        heroBottom.style.transform = 'translateY(' + _lerp(30,0,bp).toFixed(1) + 'px)';
+      }
+      if(scrollCue){ scrollCue.style.opacity = (1 - _seg(sp,0.02,0.16)).toFixed(3); }
       requestAnimationFrame(heroLoop);
     })();
+  } else {
+    /* モバイル/reduced-motion：静的（全部見える）＋fineならマウス微パララックスのみ */
+    if(heroBottom){ heroBottom.style.opacity = '1'; }
+    if(hero && heroFine && !heroReduce){
+      (function mobLoop(){
+        hmcur += (hmx - hmcur) * 0.06;
+        if(heroModelImg) heroModelImg.style.transform = 'scale(1.02) translateX(' + (hmcur*-10).toFixed(1) + 'px)';
+        if(wm) wm.style.transform = 'translateX(' + (hmcur*-18).toFixed(1) + 'px)';
+        requestAnimationFrame(mobLoop);
+      })();
+    }
   }
 
   /* ビジョンバンドの背景視差 */
