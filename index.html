@@ -219,8 +219,8 @@ body.menu-open #mobile-menu{opacity:1;visibility:visible}
 /* 建築模型を全面bleed（1枚絵・スクロールで押し込み＝Apple製品ページ式の生成演出） */
 .hero-model{position:absolute;inset:0;z-index:1;overflow:hidden;animation:heroFade 1.6s .1s ease both}
 @keyframes heroFade{from{opacity:0}to{opacity:1}}
-.hero-model img{width:100%;height:100%;object-fit:cover;object-position:center 40%;display:block;
-  transform-origin:50% 48%;will-change:transform,opacity}
+.hero-model img{width:100%;height:100%;object-fit:cover;object-position:center 36%;display:block;
+  transform-origin:50% 42%;will-change:transform,opacity}
 /* スクロール振り付け用スペック（右・行送りで出現） */
 .hero-specs{position:absolute;right:clamp(28px,7vw,110px);top:50%;transform:translateY(-50%);z-index:5;
   margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:clamp(16px,2.4vh,26px);text-align:right}
@@ -734,7 +734,7 @@ html,body{overflow-x:clip}
 <section id="hero">
   <div id="hero-stage">
     <div class="hero-model" id="hero-model">
-      <img src="img/hero_model.jpg" alt="Promotersが手がける建築（スケールモデル）">
+      <img src="img/hero_tower.jpg" alt="Promotersが手がける都市建築">
     </div>
     <p class="hero-eyebrow">株式会社Promoters — GINZA, TOKYO</p>
     <div class="wordmark">Promoters</div>
@@ -1217,7 +1217,7 @@ html,body{overflow-x:clip}
     var dustMouse = {x:-9999, y:-9999};
     var isFine = matchMedia('(pointer:fine)').matches;
     var isSmall = matchMedia('(max-width:760px)').matches;
-    var count = isSmall ? 30 : 64;
+    var count = isSmall ? 12 : 22;   /* テスラ風にミニマル化＝金の塵を大幅減 */
 
     function sizeDust(){
       var dpr = Math.min(devicePixelRatio || 1, 2);
