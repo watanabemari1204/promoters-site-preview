@@ -15,7 +15,8 @@ Options -Indexes
   Header always set X-Content-Type-Options "nosniff"
   Header always set Referrer-Policy "strict-origin-when-cross-origin"
   Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
-  Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self' mailto:; frame-ancestors 'self'; upgrade-insecure-requests"
+  Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'sha256-atKl5RCWAQNhhYWUHRS6JzbvNfHrG+tEtrP16sMnU+k=' 'sha256-t/aGjZgqoZziZNZ80OExV+d9+fckBVc7GK7UYp7XlFE=' 'sha256-oUBv/VgCcuVjZuOKVPVhWrqnUX6WVpoiRidwySqNkic='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self' mailto:; frame-ancestors 'self'; upgrade-insecure-requests"
+  # ↑script-srcのハッシュはindex.html内のインラインscript3個と対応。scriptの中身を変えたら両方(ここと<head>のmetaタグ)を再計算・同期すること
 </IfModule>
 
 # --- SSL証明書(Let's Encrypt)設定後にコメントを外して有効化 ---
