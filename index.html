@@ -3,9 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!-- セキュリティ：外部スクリプト読込・他ドメインへの通信を遮断（フォームはmailtoのみでサーバー送信なし）。詳細はspecs/04参照 -->
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self' mailto:;">
+<!-- クリックジャッキング対策：GitHub Pages等の静的ホスティングはX-Frame-Options/frame-ancestorsヘッダーを送出できないため、JSでフレーム脱出（本番Apache移行後は.htaccessのframe-ancestorsが正の防御・これは保険） -->
+<script>if(window.top!==window.self){window.top.location=window.self.location.href;}</script>
+<!-- セキュリティ：外部スクリプト読込・他ドメインへの通信を遮断（フォームはmailtoのみでサーバー送信なし）。詳細はspecs/04参照
+     script-srcはunsafe-inlineでなくハッシュ指定（インラインscript3個＝フレーム脱出/JSON-LD/UI）。
+     いずれかのscriptタグの中身を1文字でも変更したら再計算必須（変えないとCSP違反でそのscriptが動かなくなる）。
+     再計算コマンド：python3 -c "import re,hashlib,base64;h=open('index.html',encoding='utf-8').read();[print('sha256-'+base64.b64encode(hashlib.sha256(s.encode()).digest()).decode()) for s in re.findall(r'<script(?:\s[^>]*)?>(.*?)</script>',h,re.S)]" -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-atKl5RCWAQNhhYWUHRS6JzbvNfHrG+tEtrP16sMnU+k=' 'sha256-t/aGjZgqoZziZNZ80OExV+d9+fckBVc7GK7UYp7XlFE=' 'sha256-oUBv/VgCcuVjZuOKVPVhWrqnUX6WVpoiRidwySqNkic='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self' mailto:; upgrade-insecure-requests;">
 <meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="theme-color" content="#0e1116">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png">
 <title>株式会社Promoters｜不動産は「保有」から「活用」の時代へ — 銀座の不動産開発・再生・管理</title>
 <meta name="description" content="株式会社Promoters（東京・銀座）。綿密なマーケティングに基づく不動産開発・不動産再生・賃貸管理の一気通貫体制で、不動産のポテンシャルを最大化します。収益物件・土地活用・共同開発のご相談は03-3541-7000へ。">
 <link rel="canonical" href="https://promoters.co.jp/">
@@ -159,7 +169,7 @@ header.scrolled{
 }
 .logo{display:flex;align-items:center;gap:10px}
 .logo-text{display:flex;flex-direction:column;line-height:1.3}
-.brand-mark{width:24px;height:auto;flex-shrink:0}
+.brand-mark{width:26px;height:26px;flex-shrink:0}   /* 実ロゴ(promoters.co.jp)実測比率=ほぼ正方形(幅36:高さ38)に合わせた */
 .logo .en{font-family:'Helvetica Neue',Arial,sans-serif;font-size:17px;font-weight:800;letter-spacing:.02em;color:var(--paper)}
 .logo .en sup{font-size:.5em;letter-spacing:0;margin-left:1px;font-weight:600;color:var(--muted)}
 .logo .jp{font-size:10px;letter-spacing:.3em;color:var(--muted)}
@@ -196,78 +206,8 @@ body.menu-open #mobile-menu{opacity:1;visibility:visible}
 #mobile-menu a small{display:block;text-align:center;font-family:var(--sans);font-size:10px;color:var(--muted);letter-spacing:.2em}
 #mobile-menu .tel{color:var(--gold);font-size:24px;letter-spacing:.1em}
 
-/* ---------- hero（Foliom型：実写パネル×巨大セリフ） ---------- */
-#hero{position:relative;height:340vh;background:#060709}
-#hero-stage{position:sticky;top:0;height:100svh;min-height:640px;overflow:hidden;background:#060709}
-#hero-stage::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
-  background:radial-gradient(ellipse 70% 45% at 50% 28%,rgba(200,164,93,.07),transparent 65%)}
-#hero-stage::after{content:"";position:absolute;inset:0;z-index:4;pointer-events:none;
-  background:linear-gradient(180deg,transparent 58%,rgba(6,7,9,.72) 100%)}
-.hero-eyebrow{
-  position:absolute;top:clamp(84px,12vh,130px);left:50%;transform:translateX(-50%);z-index:2;
-  font-family:var(--en);font-size:clamp(10px,1.1vw,13px);letter-spacing:.55em;text-indent:.55em;
-  color:var(--gold);white-space:nowrap;animation:eyebrowIn 1.4s .2s both;
-}
-@keyframes eyebrowIn{from{opacity:0;transform:translate(-50%,-12px)}to{opacity:1;transform:translate(-50%,0)}}
-.wordmark{
-  position:absolute;top:clamp(88px,12vh,126px);left:0;right:0;z-index:2;text-align:center;
-  font-family:var(--en);font-weight:300;color:var(--paper);
-  font-size:clamp(64px,11.5vw,180px);line-height:1;letter-spacing:-.01em;
-  animation:wordIn 1.8s .4s both;will-change:transform;
-}
-@keyframes wordIn{from{opacity:0;letter-spacing:.08em;filter:blur(8px)}to{opacity:1;letter-spacing:-.01em;filter:blur(0)}}
-/* 建築模型を全面bleed（1枚絵・スクロールで押し込み＝Apple製品ページ式の生成演出） */
-.hero-model{position:absolute;inset:0;z-index:1;overflow:hidden;animation:heroFade 1.6s .1s ease both}
-@keyframes heroFade{from{opacity:0}to{opacity:1}}
-.hero-model img{width:100%;height:100%;object-fit:cover;object-position:center 46%;display:block;
-  transform-origin:50% 46%;will-change:transform,opacity}
-/* スクロール振り付け用スペック（右・行送りで出現） */
-.hero-specs{position:absolute;right:clamp(28px,7vw,110px);top:50%;transform:translateY(-50%);z-index:5;
-  margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:clamp(16px,2.4vh,26px);text-align:right}
-.hero-specs li{font-family:var(--serif);font-weight:600;font-size:clamp(17px,2vw,26px);color:var(--paper);
-  letter-spacing:.14em;text-shadow:0 2px 22px rgba(0,0,0,.85);
-  opacity:0;transform:translateX(26px);transition:opacity .6s ease,transform .7s cubic-bezier(.22,.8,.3,1)}
-.hero-specs li.on{opacity:1;transform:none}
-.hero-specs li .n{display:block;font-family:var(--en);font-size:11px;letter-spacing:.32em;color:var(--gold);margin-bottom:5px}
-/* 模型の上・下・左を沈めて、巨大serifと左下テキストを常に黒地に載せる（wordmarkより背面） */
-.hero-model::after{content:"";position:absolute;inset:0;pointer-events:none;
-  background:
-    linear-gradient(180deg,rgba(6,7,9,.5) 0%,rgba(6,7,9,.1) 20%,transparent 45%,rgba(6,7,9,.5) 70%,rgba(6,7,9,.96) 100%),
-    linear-gradient(90deg,rgba(6,7,9,.55) 0%,transparent 42%)}
-.hero-bottom{
-  position:absolute;left:clamp(20px,6vw,90px);right:clamp(20px,6vw,90px);bottom:clamp(46px,8vh,90px);
-  z-index:5;display:flex;flex-direction:column;align-items:flex-start;gap:22px;max-width:min(640px,86vw);
-  opacity:0;
-}
+/* ---------- shared button component（旧ヒーロー案の演出CSSは2026-07-24に撤去。詳細はspecs/03参照） ---------- */
 @keyframes riseIn{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
-h1{
-  font-family:var(--serif);font-weight:600;
-  font-size:clamp(20px,2.4vw,32px);line-height:1.8;letter-spacing:.08em;
-  text-shadow:0 2px 24px rgba(0,0,0,.7);
-}
-h1 .gold{color:var(--gold-bright)}
-h1 small{
-  display:block;font-family:var(--sans);font-weight:300;
-  font-size:clamp(11.5px,1vw,13.5px);color:#aab0bc;letter-spacing:.14em;margin-top:10px;
-}
-.hero-ctas{display:flex;gap:14px;flex-wrap:wrap}
-@media (max-width:760px){
-  #hero{height:100svh}
-  #hero-stage{position:relative;height:100svh}
-  .hero-bottom{opacity:1}
-  .hero-specs{display:none}
-  .wordmark{font-size:clamp(58px,19vw,110px)}
-  #hero .scroll-cue{display:none}
-  .hero-model img{object-position:center 42%}
-}
-@media (prefers-reduced-motion:reduce){
-  .hero-eyebrow,.wordmark,.hero-model,.hero-bottom{animation:none}
-  #hero{height:100svh}
-  #hero-stage{position:relative;height:100svh}
-  .hero-bottom{opacity:1}
-  .hero-specs{display:none}
-}
-
 .btn{
   display:inline-flex;align-items:center;gap:12px;
   font-size:14px;letter-spacing:.14em;font-weight:400;
@@ -279,21 +219,6 @@ h1 small{
 .btn-gold:hover{background:var(--gold-bright);border-color:var(--gold-bright);box-shadow:0 8px 40px rgba(200,164,93,.35)}
 .btn-ghost{border-color:rgba(242,238,229,.35);color:var(--paper)}
 .btn-ghost:hover{border-color:var(--gold);color:var(--gold-bright)}
-.scroll-cue{
-  position:absolute;right:clamp(24px,4vw,56px);bottom:34px;
-  font-family:var(--en);font-size:10.5px;letter-spacing:.4em;color:var(--muted);
-  writing-mode:vertical-rl;display:flex;align-items:center;gap:12px;
-}
-.scroll-cue::after{content:"";width:1px;height:56px;background:linear-gradient(180deg,var(--gold),transparent);animation:cue 2s ease-in-out infinite}
-@keyframes cue{0%{transform:scaleY(0);transform-origin:top}45%{transform:scaleY(1);transform-origin:top}55%{transform:scaleY(1);transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
-
-/* ヒーロー：金の塵（カーソルからそっと避ける・極小/極少/極遅） */
-#hero-dust{position:absolute;inset:0;z-index:3;pointer-events:none}
-@media (prefers-reduced-motion:reduce){#hero-dust{display:none}}
-
-/* ヒーロー：建物の写真に触れると熱が残って光る金のグロー（マグマ演出の金版） */
-#hero-light{position:absolute;inset:0;z-index:3;pointer-events:none;mix-blend-mode:screen}
-@media (prefers-reduced-motion:reduce){#hero-light{display:none}}
 
 /* ---------- shared section ---------- */
 section{position:relative;padding:clamp(80px,12vh,140px) clamp(20px,6vw,90px)}
@@ -530,20 +455,10 @@ footer nav a:hover{color:var(--gold-bright)}
   #float-cta{display:grid}
   body{padding-bottom:52px}
   .f-row{grid-template-columns:1fr}
-  .hero-ctas .btn{width:100%;justify-content:center}
 }
 @media (prefers-reduced-motion:reduce){
   .rv{transition:none;opacity:1;transform:none}
 }
-
-/* ---------- hero trust chip（営業ゼロ18年をFVへ引き上げ） ---------- */
-.hero-lead{max-width:660px}
-.hero-trust{
-  display:inline-flex;align-items:center;gap:12px;margin-bottom:16px;
-  font-family:var(--sans);font-size:clamp(11px,1vw,12.5px);font-weight:500;
-  letter-spacing:.18em;color:var(--gold-bright);text-shadow:0 2px 16px rgba(0,0,0,.7);
-}
-.hero-trust::before{content:"";width:28px;height:1px;background:var(--gold);flex-shrink:0}
 
 /* ---------- 選ばれる理由（反論の先回り） ---------- */
 #reason{background:var(--ink-2);border-bottom:1px solid rgba(200,164,93,.12)}
@@ -616,17 +531,6 @@ html,body{overflow-x:clip}
 /* ボタンは語中で折れない・矢印が離れない（Hallmark gate49） */
 .btn{justify-content:center}
 .btn .arw{flex-shrink:0}
-@media(max-width:760px){
-  .hero-ctas{width:100%}
-  .hero-ctas .btn{width:100%}
-}
-
-/* ヒーロー：モバイルで eyebrow と wordmark が重ならない＋横はみ出し防止 */
-@media(max-width:760px){
-  .hero-eyebrow{top:76px;font-size:9px;letter-spacing:.26em;text-indent:.26em;max-width:92vw;overflow:hidden;text-overflow:ellipsis}
-  .wordmark{top:106px}
-  .hero-bottom{bottom:clamp(70px,10vh,90px)}
-}
 
 /* 可読性：本文グレーを一段明るく（"見にくい"対策） */
 .sec-lead{color:#c6ccd6}
@@ -674,6 +578,77 @@ html,body{overflow-x:clip}
 
 /* 選ばれる理由：番号を大きくグラフィック化 */
 .reasons .r .no{font-size:clamp(30px,3.2vw,42px);font-weight:300;letter-spacing:.02em;color:var(--gold);opacity:.9;display:block;margin-bottom:6px;line-height:1}
+
+/* ===== 2026-07-24 スタイリッシュ刷新：明るいエディトリアル建築ヒーロー（白ベース・実写・大余白） ===== */
+#hero.hero-lite{--bone:#f2efe8;--ink:#17150f;--ink2:#6a675e;--hair:rgba(23,21,15,.16);
+  position:relative;min-height:100svh;height:auto;background:var(--bone);color:var(--ink);
+  display:flex;align-items:center;overflow:hidden;padding:clamp(112px,15vh,152px) 0 clamp(50px,8vh,90px)}
+.hl-inner{width:100%;max-width:1440px;margin:0 auto;padding:0 clamp(24px,5vw,72px);
+  display:grid;grid-template-columns:1.04fr .96fr;gap:clamp(30px,5vw,80px);align-items:center}
+.hl-copy{max-width:640px;min-width:0}
+.hl-eyebrow{display:flex;align-items:center;gap:16px;font-family:var(--en);font-size:12px;letter-spacing:.26em;
+  text-transform:uppercase;color:var(--ink2)}
+.hl-rule{width:46px;height:1px;background:var(--gold);flex-shrink:0}
+.hl-eyebrow-txt{min-width:0}   /* flexアイテムのテキストがラップされず横に溢れるのを防止（モバイル崩れ修正・2026-07-24） */
+.hl-title{font-family:var(--serif);font-weight:600;font-size:clamp(32px,4.4vw,56px);line-height:1.32;letter-spacing:.01em;margin:26px 0 0;color:var(--ink);text-shadow:3px 3px 1px rgba(23,21,15,.4),6px 9px 16px rgba(23,21,15,.22)}
+.hl-title .em{color:#8a6a1f}
+.hl-lead{margin-top:26px;max-width:33em;color:#48453d;font-size:clamp(14px,1.15vw,16px);line-height:2.05}
+.hl-actions{margin-top:34px;display:flex;align-items:center;gap:30px;flex-wrap:wrap}
+.hl-btn{background:var(--ink);color:var(--bone);padding:16px 34px;font-size:14px;letter-spacing:.12em;transition:background .3s}
+.hl-btn:hover{background:#000}
+.hl-textlink{color:var(--ink);font-size:14px;letter-spacing:.08em;border-bottom:1px solid var(--hair);padding-bottom:6px;display:inline-flex;gap:8px;transition:border-color .3s}
+.hl-textlink span{font-family:var(--en);transition:transform .3s}
+.hl-textlink:hover{border-color:var(--ink)}
+.hl-textlink:hover span{transform:translateX(4px)}
+.hl-meta{margin-top:clamp(38px,7vh,70px);padding-top:20px;border-top:1px solid var(--hair);
+  display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;font-size:12px;letter-spacing:.1em;color:var(--ink2)}
+.hl-meta-num{font-family:var(--en);letter-spacing:.16em}
+.hl-figure{position:relative;margin:0;min-width:0}
+.hl-img{position:relative;overflow:hidden;aspect-ratio:4/5;background:#ddd7cc}
+.hl-img img{width:100%;height:100%;object-fit:cover;display:block;transform:scale(1.05);transition:transform 1.5s cubic-bezier(.22,.8,.3,1)}
+.hl-figure figcaption{margin-top:14px;font-family:var(--en);font-size:11px;letter-spacing:.28em;color:var(--ink2);text-transform:uppercase;text-align:right}
+.hl-scroll{position:absolute;left:clamp(24px,5vw,72px);bottom:clamp(28px,5vh,54px);writing-mode:vertical-rl;
+  font-family:var(--en);font-size:11px;letter-spacing:.34em;color:var(--ink2);text-transform:uppercase}
+/* 入場（.in） */
+.hero-lite .rvup{opacity:0;transform:translateY(28px);transition:opacity 1s cubic-bezier(.22,.8,.3,1),transform 1s cubic-bezier(.22,.8,.3,1)}
+.hero-lite.in .rvup{opacity:1;transform:none}
+.hero-lite .rvup.d1{transition-delay:.08s}.hero-lite .rvup.d2{transition-delay:.20s}.hero-lite .rvup.d3{transition-delay:.34s}.hero-lite .rvup.d4{transition-delay:.48s}.hero-lite .rvup.d5{transition-delay:.60s}
+.hero-lite.in .hl-img img{transform:scale(1)}
+/* ヘッダー：明るいヒーロー上（未スクロール時）は文字を墨色に */
+header:not(.scrolled) .logo .en{color:#17150f}
+header:not(.scrolled) .logo .jp{color:#6a675e}
+header:not(.scrolled) .brand-mark path[stroke="#f2eee5"]{stroke:#17150f}
+header:not(.scrolled) nav.pc a{color:#57544c}
+header:not(.scrolled) nav.pc a:hover{color:#17150f}
+header:not(.scrolled) .head-cta{border-color:rgba(23,21,15,.42);color:#17150f!important}
+header:not(.scrolled) .head-cta:hover{background:#17150f;color:#f2efe8!important}
+header:not(.scrolled) #hamburger span{background:#17150f}
+@media (max-width:900px){
+  .hl-inner{grid-template-columns:1fr;gap:clamp(26px,5vh,42px)}
+  .hl-copy{max-width:none;order:2}
+  .hl-figure{order:1}
+  .hl-img{aspect-ratio:16/11}
+  .hl-scroll{display:none}
+  .hl-title{font-size:clamp(30px,8vw,42px)}
+  .hl-lead br{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  .hero-lite .rvup{opacity:1;transform:none}
+  .hl-img img{transform:none}
+}
+/* ローダーも白基調に（明るいヒーローと継ぎ目なく／読み込み残像を消す） */
+#loader{background:#f2efe8}
+#loader .mark{color:#17150f}
+#loader .bar{background:rgba(23,21,15,.14)}
+#loader .bar i{background:#8a6a1f}
+/* #vision：都市写真の重複解消で背景写真を撤去→無地の上品な帯に（上下に細罫線） */
+#vision{background:#0f1319;border-top:1px solid rgba(200,164,93,.16);border-bottom:1px solid rgba(200,164,93,.16)}
+/* 写真のカーソル拡大/光沢ホバーを撤去（まり指示・引き算） */
+.svc-row:hover .svc-img img,.wk:hover img,.msg-figure:hover img{transform:none}
+.svc-img .ph::after,.wk .ph::after{display:none}
+/* ===== 日本語の自然な折り返し：文節で改行（単語・文の途中で不自然に切らない）＝全体適用 =====
+   word-breakは継承プロパティなのでbodyに置くと全テキストへ波及。Safari17.4+/Chrome119+対応。 */
+body{word-break:auto-phrase;line-break:strict;overflow-wrap:normal}
 </style>
 </head>
 <body>
@@ -685,18 +660,18 @@ html,body{overflow-x:clip}
 
 <header id="header">
   <a class="logo" href="#hero">
-    <svg class="brand-mark" viewBox="0 0 100 145" aria-hidden="true">
-      <path d="M50,4 L6,36 L50,68 L94,36 Z" fill="none" stroke="#f2eee5" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
-      <path d="M6,60 L50,84" fill="none" stroke="#f2eee5" stroke-width="6" stroke-linecap="round"/>
-      <path d="M50,84 L94,60" fill="none" stroke="#e08a2e" stroke-width="6" stroke-linecap="round"/>
-      <path d="M6,73 L50,97" fill="none" stroke="#f2eee5" stroke-width="6" stroke-linecap="round"/>
-      <path d="M50,97 L94,73" fill="none" stroke="#c98b52" stroke-width="6" stroke-linecap="round"/>
-      <path d="M6,86 L50,110" fill="none" stroke="#f2eee5" stroke-width="6" stroke-linecap="round"/>
-      <path d="M50,110 L94,86" fill="none" stroke="#b79c86" stroke-width="6" stroke-linecap="round"/>
-      <path d="M6,99 L50,123" fill="none" stroke="#f2eee5" stroke-width="6" stroke-linecap="round"/>
-      <path d="M50,123 L94,99" fill="none" stroke="#9fa0a6" stroke-width="6" stroke-linecap="round"/>
-      <path d="M6,112 L50,136" fill="none" stroke="#f2eee5" stroke-width="6" stroke-linecap="round"/>
-      <path d="M50,136 L94,112" fill="none" stroke="#767980" stroke-width="6" stroke-linecap="round"/>
+    <svg class="brand-mark" viewBox="0 0 100 101" aria-hidden="true">
+      <path d="M50,4 L6,26.5 L50,49 L94,26.5 Z" fill="none" stroke="#f2eee5" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+      <path d="M6,43.4 L50,60.3" fill="none" stroke="#f2eee5" stroke-width="6" stroke-linecap="round"/>
+      <path d="M50,60.3 L94,43.4" fill="none" stroke="#e08a2e" stroke-width="6" stroke-linecap="round"/>
+      <path d="M6,52.6 L50,69.5" fill="none" stroke="#f2eee5" stroke-width="6" stroke-linecap="round"/>
+      <path d="M50,69.5 L94,52.6" fill="none" stroke="#c98b52" stroke-width="6" stroke-linecap="round"/>
+      <path d="M6,61.7 L50,78.6" fill="none" stroke="#f2eee5" stroke-width="6" stroke-linecap="round"/>
+      <path d="M50,78.6 L94,61.7" fill="none" stroke="#b79c86" stroke-width="6" stroke-linecap="round"/>
+      <path d="M6,70.9 L50,87.8" fill="none" stroke="#f2eee5" stroke-width="6" stroke-linecap="round"/>
+      <path d="M50,87.8 L94,70.9" fill="none" stroke="#9fa0a6" stroke-width="6" stroke-linecap="round"/>
+      <path d="M6,80 L50,97" fill="none" stroke="#f2eee5" stroke-width="6" stroke-linecap="round"/>
+      <path d="M50,97 L94,80" fill="none" stroke="#767980" stroke-width="6" stroke-linecap="round"/>
     </svg>
     <span class="logo-text">
       <span class="en">PROMOTERS<sup>&reg;</sup></span>
@@ -731,32 +706,27 @@ html,body{overflow-x:clip}
 </div>
 
 <!-- ================= HERO ================= -->
-<section id="hero">
-  <div id="hero-stage">
-    <div class="hero-model" id="hero-model">
-      <img src="img/hero_house.jpg" alt="Promotersが手がける邸宅（夕景）">
-    </div>
-    <p class="hero-eyebrow">株式会社Promoters — GINZA, TOKYO</p>
-    <div class="wordmark">Promoters</div>
-    <canvas id="hero-light" aria-hidden="true"></canvas>
-    <canvas id="hero-dust" aria-hidden="true"></canvas>
-    <ul class="hero-specs" id="hero-specs" aria-hidden="true">
-      <li><span class="n">01</span>不動産開発</li>
-      <li><span class="n">02</span>不動産再生</li>
-      <li><span class="n">03</span>賃貸管理</li>
-    </ul>
-    <div class="hero-bottom">
-      <div class="hero-lead">
-        <p class="hero-trust">営業をしない会社。18年、ご紹介だけで。</p>
-        <h1>不動産は、<span class="gold">「保有」</span>から<span class="gold">「活用」</span>の時代へ。<small>綿密なマーケティングに基づく開発・再生・運用で、不動産のポテンシャルを最大化する。</small></h1>
+<section id="hero" class="hero-lite">
+  <div class="hl-inner">
+    <div class="hl-copy">
+      <p class="hl-eyebrow rvup d1"><span class="hl-rule"></span><span class="hl-eyebrow-txt">Development · Renovation · Management</span></p>
+      <h1 class="hl-title rvup d2">不動産は、「保有」から<span class="em">「活用」</span>の時代へ。</h1>
+      <p class="hl-lead rvup d3">綿密なマーケティングに基づく開発・再生・運用で、<br>不動産のポテンシャルを最大化する。</p>
+      <div class="hl-actions rvup d4">
+        <a class="hl-btn" href="#contact">無料で相談する</a>
+        <a class="hl-textlink" href="#service">事業を見る<span>→</span></a>
       </div>
-      <div class="hero-ctas">
-        <a class="btn btn-gold" href="#contact">無料で相談する<span class="arw">→</span></a>
-        <a class="btn btn-ghost" href="#partner">投資家・パートナーの方へ<span class="arw">→</span></a>
+      <div class="hl-meta rvup d5">
+        <span class="hl-meta-num">Est. 2008 — Ginza, Tokyo</span>
+        <span class="hl-meta-trust">営業をしない会社。18年、ご紹介だけで。</span>
       </div>
     </div>
-    <div class="scroll-cue">SCROLL</div>
+    <figure class="hl-figure rvup d3">
+      <div class="hl-img"><img src="img/hero_house.jpg" alt="Promotersが手がける住まい"></div>
+      <figcaption>Promoters Architecture — Tokyo</figcaption>
+    </figure>
   </div>
+  <span class="hl-scroll">Scroll ↓</span>
 </section>
 
 <!-- ================= STATS ================= -->
@@ -870,7 +840,7 @@ html,body{overflow-x:clip}
     <p class="sec-lead rv">住まいが次の世代にも引き継がれ、あたたかく愛され続ける環境であること。環境に配慮した自然エネルギーで経済的であること。企業理念を体現するブランドが「エコロ」です。</p>
     <div class="works-mag">
       <figure class="wk wk-a rv">
-        <div class="ph"><img src="img/wk_house.jpg" alt="木の温もりのあるモダンな戸建て" loading="lazy"></div>
+        <div class="ph"><img src="img/wk_house.jpg" alt="木格子の意匠が美しいモダンな戸建ての外観" loading="lazy"></div>
         <figcaption><h3>ECOLO HOUSE</h3><span class="cat">新築個人住宅</span></figcaption>
         <p class="desc">太陽光発電システム完備・オール電化の環境にやさしい新築戸建て。補助金申請から売電による資産形成まで幅広くサポート。</p>
       </figure>
@@ -885,7 +855,7 @@ html,body{overflow-x:clip}
         <p class="desc">太陽光完備・オール電化の木造共同住宅。シェアハウスも多数手掛け、共同生活を通じたあたたかい環境づくりに注力。</p>
       </figure>
       <figure class="wk wk-d rv">
-        <div class="ph"><img src="img/wk_town.jpg" alt="夕暮れの住宅街の街角" loading="lazy"></div>
+        <div class="ph"><img src="img/wk_town.jpg" alt="緑豊かで落ち着いた住宅街の通り" loading="lazy"></div>
         <figcaption><h3>ECOLO TOWN</h3><span class="cat">高齢者向け住宅・街づくり</span></figcaption>
         <p class="desc">自治体と連携した最先端の街づくり。サービス付き高齢者向け住宅の設計、訪問医療・介護との連携で、住みやすく愛あふれる街へ。</p>
       </figure>
@@ -896,7 +866,6 @@ html,body{overflow-x:clip}
 
 <!-- ================= VISION ================= -->
 <section id="vision">
-  <div class="bg"><img src="img/banner.jpg" alt="夜の東京の街並み" loading="lazy"></div>
   <div class="inner rv">
     <p class="q">「東京」を、世界中の人々が<span class="gold">憧れる都市</span>に。</p>
     <p class="sub">物件のこと、土地のこと。売るか・貸すか・育てるか、迷っている段階でも構いません。</p>
@@ -946,9 +915,8 @@ html,body{overflow-x:clip}
         <p>売る・貸す・育てる——どの選択が最善かを、お客様と同じ目線で考え抜く。開発・再生・管理を自社で一気通貫できるからこそ、「売却ありき」ではない本当の最適解をご提案できます。大切な不動産のこと、まずはお気軽にご相談ください。</p>
       </div>
       <div class="msg-sign rv">
-        <span class="role">株式会社Promoters 代表</span>
         <span class="name">林 明慶</span>
-        <span class="yomi">HAYASHI AKINORI</span>
+        <span class="yomi">代表取締役</span>
       </div>
     </div>
   </div>
@@ -963,7 +931,6 @@ html,body{overflow-x:clip}
       <div class="rv">
         <table>
           <tr><th>商号</th><td>株式会社Promoters（Promoters.Co.Ltd）</td></tr>
-          <tr><th>代表者</th><td>林 明慶（はやし あきのり）</td></tr>
           <tr><th>創業</th><td>2008年7月1日</td></tr>
           <tr><th>所在地</th><td>〒108-0022 東京都港区海岸3-24-18</td></tr>
           <tr><th>電話番号</th><td><a href="tel:0335417000" style="color:var(--gold-bright)">03-3541-7000</a></td></tr>
@@ -1030,12 +997,12 @@ html,body{overflow-x:clip}
       <form class="rv" id="contact-form">
         <div class="form-expect">送信後、内容を確認のうえ<b>翌営業日中に担当者よりご連絡</b>します。当社は<b>しつこい営業を一切いたしません</b>。ご相談内容は秘密厳守で取り扱います。お急ぎの場合は <b>03-3541-7000</b>（10:00–19:00）へ。</div>
         <div class="f-row">
-          <label><span>お名前<b>※必須</b></span><input type="text" name="name" required placeholder="山田 太郎"></label>
-          <label><span>E-mail<b>※必須</b></span><input type="email" name="email" required placeholder="you@example.com"></label>
+          <label><span>お名前<b>※必須</b></span><input type="text" name="name" required maxlength="100" placeholder="山田 太郎"></label>
+          <label><span>E-mail<b>※必須</b></span><input type="email" name="email" required maxlength="254" placeholder="you@example.com"></label>
         </div>
         <div class="f-row">
-          <label>電話番号<input type="tel" name="tel" placeholder="090-0000-0000"></label>
-          <label>会社名<input type="text" name="company" placeholder="株式会社〇〇"></label>
+          <label>電話番号<input type="tel" name="tel" maxlength="20" placeholder="090-0000-0000"></label>
+          <label>会社名<input type="text" name="company" maxlength="100" placeholder="株式会社〇〇"></label>
         </div>
         <div class="f-row">
           <label>ご相談の種類
@@ -1050,9 +1017,9 @@ html,body{overflow-x:clip}
               <option>その他</option>
             </select>
           </label>
-          <label>物件のエリア・所在地（任意）<input type="text" name="area" placeholder="例：港区 / 城南エリア / 未定"></label>
+          <label>物件のエリア・所在地（任意）<input type="text" name="area" maxlength="100" placeholder="例：港区 / 城南エリア / 未定"></label>
         </div>
-        <label><span>ご相談内容<b>※必須</b></span><textarea name="message" required placeholder="一言でも構いません。ご相談内容をご記入ください。"></textarea></label>
+        <label><span>ご相談内容<b>※必須</b></span><textarea name="message" required maxlength="2000" placeholder="一言でも構いません。ご相談内容をご記入ください。"></textarea></label>
         <button type="submit" class="btn btn-gold" style="justify-content:center">この内容で相談する<span class="arw">→</span></button>
         <p class="f-note">送信ボタンでメールソフトが開きます。うまく開かない場合は info@promoters.co.jp へ直接、またはお電話ください。ご提供いただいた個人情報は、個人情報保護法および関連法規に準拠して適正に管理し、当社サービスのご提供および業務管理に必要な最小限の範囲でのみ利用します。第三者への開示は、ご本人の同意がある場合等を除き行いません。送信をもって上記にご同意いただいたものとみなします。</p>
       </form>
@@ -1089,18 +1056,18 @@ html,body{overflow-x:clip}
 
 <footer>
   <a class="logo" href="#hero">
-    <svg class="brand-mark" viewBox="0 0 100 145" aria-hidden="true">
-      <path d="M50,4 L6,36 L50,68 L94,36 Z" fill="none" stroke="#f2eee5" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
-      <path d="M6,60 L50,84" fill="none" stroke="#f2eee5" stroke-width="6" stroke-linecap="round"/>
-      <path d="M50,84 L94,60" fill="none" stroke="#e08a2e" stroke-width="6" stroke-linecap="round"/>
-      <path d="M6,73 L50,97" fill="none" stroke="#f2eee5" stroke-width="6" stroke-linecap="round"/>
-      <path d="M50,97 L94,73" fill="none" stroke="#c98b52" stroke-width="6" stroke-linecap="round"/>
-      <path d="M6,86 L50,110" fill="none" stroke="#f2eee5" stroke-width="6" stroke-linecap="round"/>
-      <path d="M50,110 L94,86" fill="none" stroke="#b79c86" stroke-width="6" stroke-linecap="round"/>
-      <path d="M6,99 L50,123" fill="none" stroke="#f2eee5" stroke-width="6" stroke-linecap="round"/>
-      <path d="M50,123 L94,99" fill="none" stroke="#9fa0a6" stroke-width="6" stroke-linecap="round"/>
-      <path d="M6,112 L50,136" fill="none" stroke="#f2eee5" stroke-width="6" stroke-linecap="round"/>
-      <path d="M50,136 L94,112" fill="none" stroke="#767980" stroke-width="6" stroke-linecap="round"/>
+    <svg class="brand-mark" viewBox="0 0 100 101" aria-hidden="true">
+      <path d="M50,4 L6,26.5 L50,49 L94,26.5 Z" fill="none" stroke="#f2eee5" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+      <path d="M6,43.4 L50,60.3" fill="none" stroke="#f2eee5" stroke-width="6" stroke-linecap="round"/>
+      <path d="M50,60.3 L94,43.4" fill="none" stroke="#e08a2e" stroke-width="6" stroke-linecap="round"/>
+      <path d="M6,52.6 L50,69.5" fill="none" stroke="#f2eee5" stroke-width="6" stroke-linecap="round"/>
+      <path d="M50,69.5 L94,52.6" fill="none" stroke="#c98b52" stroke-width="6" stroke-linecap="round"/>
+      <path d="M6,61.7 L50,78.6" fill="none" stroke="#f2eee5" stroke-width="6" stroke-linecap="round"/>
+      <path d="M50,78.6 L94,61.7" fill="none" stroke="#b79c86" stroke-width="6" stroke-linecap="round"/>
+      <path d="M6,70.9 L50,87.8" fill="none" stroke="#f2eee5" stroke-width="6" stroke-linecap="round"/>
+      <path d="M50,87.8 L94,70.9" fill="none" stroke="#9fa0a6" stroke-width="6" stroke-linecap="round"/>
+      <path d="M6,80 L50,97" fill="none" stroke="#f2eee5" stroke-width="6" stroke-linecap="round"/>
+      <path d="M50,97 L94,80" fill="none" stroke="#767980" stroke-width="6" stroke-linecap="round"/>
     </svg>
     <span class="en" style="font-size:16px">PROMOTERS<sup>&reg;</sup></span>
   </a>
@@ -1124,227 +1091,23 @@ html,body{overflow-x:clip}
   <a class="f-form" href="#contact">無料相談はこちら</a>
 </div>
 
-<!-- GSAP + ScrollTrigger（自己ホスト＝CSP script-src 'self' で許可。CDN不可のため） -->
-<script src="js/gsap.min.js"></script>
-<script src="js/ScrollTrigger.min.js"></script>
 <script>
 /* ============================================================
-   PROMOTERS — Hero (GSAP ScrollTrigger + scrub) & UI
+   PROMOTERS — UI
+   （2026-07-24：GSAP/ScrollTrigger読込・旧ヒーロー演出用のhero-stage/
+    金の塵/金の熱グロー/ビジョン背景視差は、実DOMに対応要素が無い死んだ
+    コードだったため撤去。詳細はspecs/03参照）
    ============================================================ */
 (function(){
   function easeOutCubic(t){ return 1 - Math.pow(1-t, 3); }
 
-  /* ヒーロー：GSAP ScrollTrigger + scrub でApple級のヌルヌル同期（kemu_ai手順1）。
-     pinはsticky(#hero-stage)が担当＝ScrollTriggerはscrubのみ。scrub:1のlerpで滑らか。
-     dust/light/tiltが使う var hero は stage を指す（canvasサイズ=100vh）。 */
-  var hero = document.getElementById('hero-stage');
-  var heroReduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if(window.gsap && window.ScrollTrigger && window.innerWidth > 760 && !heroReduce && document.getElementById('hero-model')){
-    gsap.registerPlugin(ScrollTrigger);
-    var htl = gsap.timeline({ scrollTrigger:{ trigger:'#hero', start:'top top', end:'bottom bottom', scrub:1 } });
-    /* ①模型が小さく中央→拡大して全画面 */
-    htl.fromTo('#hero-model img', {scale:0.66, yPercent:3}, {scale:1.0, yPercent:0, ease:'power2.out', duration:0.58}, 0)
-       .to('#hero-model img', {scale:1.06, ease:'none', duration:0.42}, 0.58)
-       /* ②eyebrow/wordmarkが拡大に合わせ上へ泳いでフェード */
-       .to('.hero-eyebrow', {opacity:0, ease:'none', duration:0.22}, 0.4)
-       .to('.wordmark', {yPercent:-42, opacity:0, ease:'none', duration:0.24}, 0.5)
-       /* ③右にスペックが1行ずつ出現 */
-       .fromTo('.hero-specs li', {opacity:0, x:28}, {opacity:1, x:0, ease:'power2.out', stagger:0.07, duration:0.14}, 0.5)
-       /* ④H1＋CTAで締め */
-       .fromTo('.hero-bottom', {opacity:0, y:30}, {opacity:1, y:0, ease:'power2.out', duration:0.18}, 0.76)
-       .to('#hero .scroll-cue', {opacity:0, ease:'none', duration:0.1}, 0.02);
-  } else {
-    /* モバイル/reduced-motion/GSAP未ロード：静的に全部見える状態へ（CTAが隠れたままを防ぐ） */
-    var _hb = document.querySelector('.hero-bottom'); if(_hb) _hb.style.opacity = '1';
+  /* エディトリアル・ヒーロー：読み込み後に .in を付けて要素をゆっくり入場 */
+  var heroLite = document.querySelector('.hero-lite');
+  if(heroLite){
+    requestAnimationFrame(function(){ setTimeout(function(){ heroLite.classList.add('in'); }, 80); });
   }
 
-  /* ビジョンバンドの背景視差 */
-  var vsec = document.getElementById('vision');
-  var vbg = vsec ? vsec.querySelector('.bg img') : null;
-  if(vbg){
-    window.addEventListener('scroll', function(){
-      var r = vsec.getBoundingClientRect();
-      if(r.bottom > 0 && r.top < window.innerHeight){
-        vbg.style.transform = 'translateY(' + ((r.top + r.height/2 - window.innerHeight/2) * -0.12).toFixed(1) + 'px)';
-      }
-    }, {passive:true});
-  }
-
-  /* ヒーロー：金の塵（画面外で停止・reduced-motionで無効・タブ非表示でrAFが自然停止） */
   var reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var dustCanvas = document.getElementById('hero-dust');
-  if(dustCanvas && hero && !reduceMotion){
-    var dctx = dustCanvas.getContext('2d');
-    var dust = [], dustRunning = false, dustRaf = null;
-    var dustMouse = {x:-9999, y:-9999};
-    var isFine = matchMedia('(pointer:fine)').matches;
-    var isSmall = matchMedia('(max-width:760px)').matches;
-    var count = isSmall ? 12 : 22;   /* テスラ風にミニマル化＝金の塵を大幅減 */
-
-    function sizeDust(){
-      var dpr = Math.min(devicePixelRatio || 1, 2);
-      var w = hero.clientWidth, h = hero.clientHeight;
-      dustCanvas.width = w * dpr; dustCanvas.height = h * dpr;
-      dustCanvas.style.width = w + 'px'; dustCanvas.style.height = h + 'px';
-      dctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    }
-    function seedDust(){
-      dust = [];
-      var w = hero.clientWidth, h = hero.clientHeight;
-      for(var i=0;i<count;i++){
-        dust.push({
-          x: Math.random()*w, y: Math.random()*h,
-          r: 1 + Math.random()*2.2,
-          vx: (Math.random()-0.5)*0.06, vy: -0.03 - Math.random()*0.05,
-          o: 0.25 + Math.random()*0.45
-        });
-      }
-    }
-    function stepDust(){
-      var w = hero.clientWidth, h = hero.clientHeight;
-      dctx.clearRect(0,0,w,h);
-      for(var i=0;i<dust.length;i++){
-        var p = dust[i];
-        if(isFine){
-          var dx = p.x - dustMouse.x, dy = p.y - dustMouse.y;
-          var d2 = dx*dx + dy*dy, rad = 150;
-          if(d2 < rad*rad){
-            var d = Math.sqrt(d2) || 1;
-            var f = (1 - d/rad) * 1.1;
-            p.x += (dx/d) * f; p.y += (dy/d) * f;
-          }
-        }
-        p.x += p.vx; p.y += p.vy;
-        if(p.y < -4){ p.y = h + 4; p.x = Math.random()*w; }
-        if(p.x < -4) p.x = w + 4; if(p.x > w + 4) p.x = -4;
-        dctx.beginPath();
-        dctx.shadowBlur = 6;
-        dctx.shadowColor = 'rgba(255,214,140,.9)';
-        dctx.fillStyle = 'rgba(255,224,166,' + p.o.toFixed(3) + ')';
-        dctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
-        dctx.fill();
-      }
-      if(dustRunning) dustRaf = requestAnimationFrame(stepDust);
-    }
-    function startDust(){ if(dustRunning) return; dustRunning = true; stepDust(); }
-    function stopDust(){ dustRunning = false; if(dustRaf) cancelAnimationFrame(dustRaf); }
-
-    sizeDust(); seedDust();
-    window.addEventListener('resize', function(){ sizeDust(); }, {passive:true});
-    if(isFine){
-      hero.addEventListener('mousemove', function(e){
-        var r = hero.getBoundingClientRect();
-        dustMouse.x = e.clientX - r.left; dustMouse.y = e.clientY - r.top;
-      }, {passive:true});
-    }
-    new IntersectionObserver(function(entries){
-      entries.forEach(function(en){ en.isIntersecting ? startDust() : stopDust(); });
-    }, {threshold:0.05}).observe(hero);
-    document.addEventListener('visibilitychange', function(){
-      if(document.hidden) stopDust(); else if(hero.getBoundingClientRect().bottom > 0) startDust();
-    });
-  }
-
-  /* ヒーロー：建物の写真に触れると金の熱が残って光る（マグマ演出の金・実写版）
-     screen合成で下の実写パネルに重ねる＝写真そのものが「窓に灯りが点る」ように光る。
-     低解像度の熱バッファをピンポンで冷却しながら、クリックで衝撃波リングを飛ばす。 */
-  var lightCanvas = document.getElementById('hero-light');
-  if(lightCanvas && hero && !reduceMotion){
-    var lctx = lightCanvas.getContext('2d');
-    var BW = 200, BH = 120;
-    var bufA = document.createElement('canvas'); bufA.width = BW; bufA.height = BH;
-    var bufB = document.createElement('canvas'); bufB.width = BW; bufB.height = BH;
-    var curBuf = bufA, curCtx = bufA.getContext('2d');
-    var nextBuf = bufB, nextCtx = bufB.getContext('2d');
-    var isFineL = matchMedia('(pointer:fine)').matches;
-    var lm = {x:0.5, y:0.55, active:!isFineL};
-    var clicks = [];
-    var lightRunning = false, lightRaf = null;
-
-    function sizeLight(){
-      var dpr = Math.min(devicePixelRatio || 1, 2);
-      var w = hero.clientWidth, h = hero.clientHeight;
-      lightCanvas.width = w * dpr; lightCanvas.height = h * dpr;
-      lightCanvas.style.width = w + 'px'; lightCanvas.style.height = h + 'px';
-      lctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    }
-    sizeLight();
-    window.addEventListener('resize', sizeLight, {passive:true});
-
-    if(isFineL){
-      hero.addEventListener('mousemove', function(e){
-        var r = hero.getBoundingClientRect();
-        lm.x = (e.clientX - r.left) / r.width; lm.y = (e.clientY - r.top) / r.height; lm.active = true;
-      }, {passive:true});
-      hero.addEventListener('mouseleave', function(){ lm.active = false; });
-    }
-    hero.addEventListener(isFineL ? 'click' : 'touchstart', function(e){
-      var r = hero.getBoundingClientRect();
-      var cx, cy;
-      if(e.touches && e.touches[0]){ cx = e.touches[0].clientX; cy = e.touches[0].clientY; }
-      else { cx = e.clientX; cy = e.clientY; }
-      clicks.push({x:(cx - r.left) / r.width, y:(cy - r.top) / r.height, t0: performance.now()});
-      if(clicks.length > 4) clicks.shift();
-    }, {passive:true});
-
-    function stepLight(ts){
-      /* 自動巡回（タッチ端末：カーソルの代わりにゆっくり熱点が周る） */
-      if(!isFineL){ lm.x = 0.5 + Math.sin(ts*0.00035)*0.36; lm.y = 0.5 + Math.cos(ts*0.00028)*0.18; }
-
-      nextCtx.clearRect(0,0,BW,BH);
-      nextCtx.globalAlpha = 0.965;
-      nextCtx.drawImage(curBuf,0,0);
-      nextCtx.globalAlpha = 1;
-      if(lm.active){
-        var gx = lm.x*BW, gy = lm.y*BH;
-        var g = nextCtx.createRadialGradient(gx,gy,0,gx,gy,BW*0.075);
-        g.addColorStop(0,'rgba(255,221,150,.95)');
-        g.addColorStop(1,'rgba(255,221,150,0)');
-        nextCtx.globalCompositeOperation = 'lighter';
-        nextCtx.fillStyle = g;
-        nextCtx.fillRect(0,0,BW,BH);
-        nextCtx.globalCompositeOperation = 'source-over';
-      }
-      var tb = curBuf, tc = curCtx; curBuf = nextBuf; curCtx = nextCtx; nextBuf = tb; nextCtx = tc;
-
-      var w = hero.clientWidth, h = hero.clientHeight;
-      lctx.clearRect(0,0,w,h);
-
-      /* 模型（全面bleed）に金の熱を乗せる。全面なのでクリップ不要。
-         クリック衝撃波リングは撤去（agent助言：CTA近傍のギミックは邪魔）。 */
-      lctx.drawImage(curBuf,0,0,w,h);
-
-      if(lightRunning) lightRaf = requestAnimationFrame(stepLight);
-    }
-    function startLight(){ if(lightRunning) return; lightRunning = true; lightRaf = requestAnimationFrame(stepLight); }
-    function stopLight(){ lightRunning = false; if(lightRaf) cancelAnimationFrame(lightRaf); }
-    new IntersectionObserver(function(entries){
-      entries.forEach(function(en){ en.isIntersecting ? startLight() : stopLight(); });
-    }, {threshold:0.05}).observe(hero);
-    document.addEventListener('visibilitychange', function(){
-      if(document.hidden) stopLight(); else if(hero.getBoundingClientRect().bottom > 0) startLight();
-    });
-  }
-
-  /* 実写パネル（サービス/実績）：カーソル追従のチルト＋光沢。ポインタが細かい端末のみ */
-  if(matchMedia('(pointer:fine)').matches && !reduceMotion){
-    document.querySelectorAll('.svc-img .ph, .wk .ph').forEach(function(ph){
-      var img = ph.querySelector('img');
-      if(!img) return;
-      ph.addEventListener('mousemove', function(e){
-        var r = ph.getBoundingClientRect();
-        var px = (e.clientX - r.left) / r.width, py = (e.clientY - r.top) / r.height;
-        img.style.transition = 'transform .15s ease-out';
-        img.style.transform = 'scale(1.1) rotateX(' + ((0.5-py)*14).toFixed(2) + 'deg) rotateY(' + ((px-0.5)*14).toFixed(2) + 'deg)';
-        ph.style.setProperty('--mx', (px*100).toFixed(1) + '%');
-        ph.style.setProperty('--my', (py*100).toFixed(1) + '%');
-      }, {passive:true});
-      ph.addEventListener('mouseleave', function(){
-        img.style.transition = 'transform .7s cubic-bezier(.22,.8,.3,1)';
-        img.style.transform = '';
-      });
-    });
-  }
 
   /* CTAボタン：カーソルにわずかに引き寄せられるマグネット追従 */
   if(matchMedia('(pointer:fine)').matches && !reduceMotion){
